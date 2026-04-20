@@ -3,51 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monney Pain – Et si tu avais économisé ?</title>
+<title>Monney Pain – Et si tu avais investi ?</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --accent: #d4537e;
-    --accent-dark: #993556;
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #1a1a1a;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #ffffff;
-    --text2: #aaaaaa;
-    --text3: #555555;
-    --green: #5DCAA5;
-    --green-dark: #0F6E56;
-    --red: #E24B4A;
-    --amber: #EF9F27;
+    --accent: #d4537e; --accent-dark: #993556;
+    --bg: #0a0a0a; --bg3: #1a1a1a;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+    --text: #ffffff; --text2: #aaaaaa; --text3: #555555;
+    --green: #5DCAA5; --green-dark: #0F6E56; --red: #E24B4A; --amber: #EF9F27;
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; line-height: 1.6; }
-
   nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
   .logo { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
   .logo span { color: var(--accent); }
   .nav-links { display: flex; gap: 4px; }
   .nav-link { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; border: none; background: none; color: var(--text2); cursor: pointer; font-family: inherit; transition: all 0.15s; }
-  .nav-link.active, .nav-link:hover { background: var(--bg3); color: var(--text); }
-  .nav-link.active { color: var(--accent); }
-
+  .nav-link.active { background: var(--bg3); color: var(--accent); }
+  .nav-link:hover { background: var(--bg3); color: var(--text); }
   .page { display: none; }
   .page.active { display: block; }
-
-  .hero { padding: 64px 24px 48px; text-align: center; max-width: 600px; margin: 0 auto; }
-  .hero h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+  .hero { padding: 48px 24px 0; text-align: center; max-width: 600px; margin: 0 auto; }
+  .hero h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 14px; }
   .hero h1 em { color: var(--accent); font-style: normal; }
-  .hero p { font-size: 15px; color: var(--text2); max-width: 440px; margin: 0 auto 32px; }
-  .hero-arrow { color: var(--text3); font-size: 24px; animation: bounce 1.5s infinite; display: block; }
+  .hero p { font-size: 15px; color: var(--text2); max-width: 440px; margin: 0 auto 24px; }
+  .hero-img { width: 100%; max-width: 340px; margin: 0 auto 16px; display: block; border-radius: 14px; overflow: hidden; }
+  .hero-img img { width: 100%; display: block; border-radius: 14px; }
+  .hero-arrow { color: var(--text3); font-size: 24px; animation: bounce 1.5s infinite; display: block; padding-bottom: 32px; }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-
   .container { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
   .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 14px; margin-top: 40px; }
-
-  /* EXPENSE CARDS */
   .expense-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; }
   .expense-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px; transition: border-color 0.15s; }
   .expense-card.active { border: 1.5px solid var(--accent); }
@@ -56,32 +43,23 @@
   .expense-card .amount-row { display: flex; align-items: center; gap: 4px; }
   .expense-card .currency { font-size: 13px; color: var(--text3); }
   .expense-card input[type=number] { width: 100%; font-size: 16px; font-weight: 500; color: var(--text); background: none; border: none; outline: none; font-family: inherit; }
-  .expense-card input[type=number]::-webkit-inner-spin-button,
-  .expense-card input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-  /* DATE SELECTS */
+  .expense-card input[type=number]::-webkit-inner-spin-button, .expense-card input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
   .date-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .date-row label { font-size: 14px; color: var(--text2); }
   .date-selects { display: flex; gap: 8px; }
-  .date-selects select, .immo-select { background: var(--bg3); border: 0.5px solid var(--border2); border-radius: 8px; padding: 9px 12px; font-size: 14px; color: var(--text); font-family: inherit; outline: none; cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
-  .date-selects select:focus, .immo-select:focus { border-color: var(--accent); }
+  .date-selects select { background: var(--bg3); border: 0.5px solid var(--border2); border-radius: 8px; padding: 9px 12px; font-size: 14px; color: var(--text); font-family: inherit; outline: none; cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+  .date-selects select:focus { border-color: var(--accent); }
   .date-info { font-size: 13px; color: var(--text3); }
   .date-info strong { color: var(--text2); font-weight: 500; }
-
-  /* TOTAL BANNER */
   .total-banner { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
   .t-label { font-size: 12px; color: var(--text3); margin-bottom: 4px; }
   .t-amount { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; }
   .t-right { text-align: right; }
   .t-year { font-size: 20px; font-weight: 500; }
   .t-day { font-size: 12px; color: var(--text3); margin-top: 2px; }
-
-  /* ASSET TABS */
   .asset-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
   .asset-tab { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 0.5px solid var(--border2); color: var(--text2); background: none; cursor: pointer; transition: all 0.15s; font-family: inherit; }
   .asset-tab.active { background: var(--accent); color: white; border-color: transparent; }
-
-  /* ASSET CARDS */
   .asset-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 24px; }
   .asset-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s; }
   .asset-card:hover { border-color: var(--border2); }
@@ -91,16 +69,12 @@
   .a-gain { font-size: 11px; margin-top: 3px; color: var(--green); font-weight: 500; }
   .a-gain.neg { color: #F09595; }
   .a-multi { font-size: 11px; color: var(--text3); }
-
-  /* CHART */
   .chart-wrap { position: relative; width: 100%; height: 260px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 8px; }
   .chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; padding-top: 8px; }
   .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text2); }
   .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-  /* AFFILIATE */
   .affiliate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-  .aff-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s; }
+  .aff-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
   .aff-card:hover { border-color: var(--border2); }
   .aff-top { display: flex; align-items: center; gap: 10px; }
   .aff-logo { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; flex-shrink: 0; }
@@ -111,17 +85,13 @@
   .aff-btn:hover { background: rgba(255,255,255,0.06); }
   .aff-btn.primary { background: var(--accent); color: white; border-color: transparent; }
   .aff-btn.primary:hover { background: var(--accent-dark); }
-
-  /* IMMO PAGE */
   .immo-hero { padding: 40px 24px 24px; text-align: center; max-width: 600px; margin: 0 auto; }
   .immo-hero h1 { font-size: clamp(22px, 4vw, 32px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 10px; }
   .immo-hero h1 em { color: var(--green); font-style: normal; }
   .immo-hero p { font-size: 14px; color: var(--text2); }
-
   .pill-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
   .pill-tab { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; border: 0.5px solid var(--border2); color: var(--text2); background: none; cursor: pointer; font-family: inherit; transition: all 0.15s; }
   .pill-tab.active { background: var(--green); color: white; border-color: transparent; }
-
   .params-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
   .param-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 12px 14px; }
   .param-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
@@ -129,7 +99,6 @@
   .param-inp input { font-size: 15px; font-weight: 500; color: var(--text); background: none; border: none; outline: none; font-family: inherit; width: 100%; }
   .param-inp input::-webkit-inner-spin-button, .param-inp input::-webkit-outer-spin-button { -webkit-appearance: none; }
   .param-unit { font-size: 11px; color: var(--text3); white-space: nowrap; }
-
   .metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; }
   .metric-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px; }
   .metric-card .ml { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
@@ -138,14 +107,11 @@
   .metric-card.green .mv { color: var(--green); }
   .metric-card.red .mv { color: var(--red); }
   .metric-card.amber .mv { color: var(--amber); }
-
   .phase-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
   .phase-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; }
   .phase-credit { background: rgba(239,159,39,0.15); color: var(--amber); }
   .phase-libre  { background: rgba(93,202,165,0.12); color: var(--green); }
-
   .immo-chart-wrap { position: relative; width: 100%; height: 280px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 8px; }
-
   .annual-table { width: 100%; font-size: 12px; border-collapse: collapse; table-layout: fixed; }
   .annual-table th { padding: 7px 8px; text-align: right; font-weight: 500; font-size: 11px; color: var(--text3); border-bottom: 0.5px solid var(--border); }
   .annual-table th:first-child { text-align: left; }
@@ -154,35 +120,33 @@
   .annual-table tr:hover td { background: rgba(255,255,255,0.02); }
   .tg { color: var(--green); font-weight: 500; }
   .tr { color: var(--red); font-weight: 500; }
-
   .divider { height: 0.5px; background: var(--border); margin: 32px 0; }
-
   footer { border-top: 0.5px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--text3); line-height: 1.8; }
-
   @media (max-width: 500px) {
-    .nav-links { gap: 2px; }
-    .nav-link { padding: 5px 10px; font-size: 12px; }
+    .nav-link { padding: 5px 8px; font-size: 11px; }
     .expense-grid { grid-template-columns: repeat(2, 1fr); }
     .asset-cards { grid-template-columns: repeat(2, 1fr); }
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .pill-tabs { gap: 4px; }
+    .pill-tab { padding: 5px 10px; font-size: 12px; }
   }
 </style>
 </head>
 <body>
-
 <nav>
   <div class="logo">Monney<span> Pain</span></div>
   <div class="nav-links">
-    <button class="nav-link active" onclick="showPage('invest')">Investissement</button>
-    <button class="nav-link" onclick="showPage('immo')">Immobilier</button>
+    <button class="nav-link active" onclick="showPage('invest',this)">Investissement</button>
+    <button class="nav-link" onclick="showPage('immo',this)">Immobilier</button>
   </div>
 </nav>
 
 <!-- PAGE INVEST -->
 <div id="page-invest" class="page active">
   <div class="hero">
-    <h1>Et si tu avais <em>économisé ?</em></h1>
+    <h1>Et si tu avais <em>investi ?</em></h1>
     <p>Vois ce que tes dépenses auraient donné en crypto ou bourse.</p>
+    <div class="hero-img"><img src="IMG_2562.jpeg" alt="Franklin regrette de ne pas avoir investi"></div>
     <span class="hero-arrow">↓</span>
   </div>
   <div class="container">
@@ -211,7 +175,7 @@
     <p class="section-label" style="margin-top:48px">Si tu avais investi depuis le départ...</p>
     <div class="asset-tabs" id="assetTabs"></div>
     <div class="asset-cards" id="assetCards"></div>
-    <div class="chart-wrap"><canvas id="growthChart" role="img" aria-label="Évolution de l'investissement dans le temps"></canvas></div>
+    <div class="chart-wrap"><canvas id="growthChart" role="img" aria-label="Évolution investissement"></canvas></div>
     <div class="chart-legend" id="chartLegend"></div>
     <p class="section-label">Commence à investir maintenant</p>
     <div class="affiliate-grid" id="affGrid"></div>
@@ -222,7 +186,7 @@
 <div id="page-immo" class="page">
   <div class="immo-hero">
     <h1>Investissement <em>immobilier locatif</em></h1>
-    <p>Simulation crédit 25 ans, loyers, travaux et taxes — 4 villes comparées.</p>
+    <p>Simulation crédit 25 ans, loyers, travaux et taxes — 5 villes comparées.</p>
   </div>
   <div class="container">
     <p class="section-label">Ville</p>
@@ -235,15 +199,11 @@
     <div class="metrics-grid" id="immoMetrics"></div>
     <p class="section-label" style="margin-top:32px">Phases</p>
     <div class="phase-row" id="phaseBadges"></div>
-    <div class="immo-chart-wrap">
-      <canvas id="immoChart" role="img" aria-label="Cash-flow cumulé sur 25 ans"></canvas>
-    </div>
+    <div class="immo-chart-wrap"><canvas id="immoChart" role="img" aria-label="Cash-flow cumulé 25 ans"></canvas></div>
     <div class="chart-legend" id="immoLegend"></div>
     <div class="divider"></div>
     <p class="section-label">Détail année par année</p>
-    <div style="overflow-x:auto">
-      <table class="annual-table" id="annualTable"></table>
-    </div>
+    <div style="overflow-x:auto"><table class="annual-table" id="annualTable"></table></div>
   </div>
 </div>
 
@@ -254,312 +214,55 @@
 </footer>
 
 <script>
-/* ─── PAGE SWITCHING ─── */
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');btn.classList.add('active');}
 
-/* ══════════════════════════════════════
-   INVEST PAGE
-══════════════════════════════════════ */
-const EXPENSES = [
-  { id: 'fastfood', icon: '🍔', label: 'Fast food',       default: 60 },
-  { id: 'coffee',   icon: '☕', label: 'Cafés',            default: 40 },
-  { id: 'cigs',     icon: '🚬', label: 'Clopes',           default: 80 },
-  { id: 'alcohol',  icon: '🍺', label: 'Alcool / bar',     default: 50 },
-  { id: 'streaming',icon: '📺', label: 'Streaming',        default: 25 },
-  { id: 'delivery', icon: '🛵', label: 'Livraison repas',  default: 45 },
-  { id: 'gambling', icon: '🎰', label: 'Jeux / paris',     default: 0  },
-  { id: 'impulse',  icon: '🛍️', label: 'Achats impulsifs', default: 30 },
-];
-const ASSET_GROUPS = {
-  'Indices': [
-    { id: 'sp500',  name: 'S&P 500',    rate: 0.10,  color: '#378ADD', emoji: '🇺🇸', note: '~10%/an' },
-    { id: 'nasdaq', name: 'Nasdaq 100', rate: 0.155, color: '#5DCAA5', emoji: '💻', note: '~15%/an' },
-    { id: 'cac40',  name: 'CAC 40',     rate: 0.072, color: '#7F77DD', emoji: '🇫🇷', note: '~7%/an'  },
-    { id: 'msci',   name: 'MSCI World', rate: 0.085, color: '#AFA9EC', emoji: '🌍', note: '~8%/an'  },
-  ],
-  'Actions': [
-    { id: 'apple',  name: 'Apple',  rate: 0.29, color: '#aaaaaa', emoji: '🍎', note: '~29%/an' },
-    { id: 'nvidia', name: 'Nvidia', rate: 0.50, color: '#76b900', emoji: '🖥️', note: '~50%/an' },
-    { id: 'tesla',  name: 'Tesla',  rate: 0.35, color: '#e31937', emoji: '⚡', note: '~35%/an' },
-    { id: 'paypal', name: 'PayPal', rate: 0.08, color: '#003087', emoji: '💳', note: '~8%/an'  },
-    { id: 'msi',    name: 'MSI',    rate: 0.18, color: '#d4537e', emoji: '🔴', note: '~18%/an' },
-  ],
-  'Crypto': [
-    { id: 'btc', name: 'Bitcoin',  rate: 0.80, color: '#EF9F27', emoji: '₿', note: 'volatil'      },
-    { id: 'eth', name: 'Ethereum', rate: 0.60, color: '#7F77DD', emoji: 'Ξ', note: 'volatil'      },
-    { id: 'sol', name: 'Solana',   rate: 1.20, color: '#9945FF', emoji: '◎', note: 'très volatil' },
-  ],
-  'Défensif': [
-    { id: 'gold',    name: 'Or',       rate: 0.07,  color: '#BA7517', emoji: '🥇', note: '~7%/an'  },
-    { id: 'livreta', name: 'Livret A', rate: 0.024, color: '#555555', emoji: '🏦', note: '2.4%/an' },
-  ],
+const EXPENSES=[{id:'fastfood',icon:'🍔',label:'Fast food',default:60},{id:'coffee',icon:'☕',label:'Cafés',default:40},{id:'cigs',icon:'🚬',label:'Clopes',default:80},{id:'alcohol',icon:'🍺',label:'Alcool / bar',default:50},{id:'streaming',icon:'📺',label:'Streaming',default:25},{id:'delivery',icon:'🛵',label:'Livraison repas',default:45},{id:'gambling',icon:'🎰',label:'Jeux / paris',default:0},{id:'impulse',icon:'🛍️',label:'Achats impulsifs',default:30}];
+const ASSET_GROUPS={'Indices':[{id:'sp500',name:'S&P 500',rate:0.10,color:'#378ADD',emoji:'🇺🇸',note:'~10%/an'},{id:'nasdaq',name:'Nasdaq 100',rate:0.155,color:'#5DCAA5',emoji:'💻',note:'~15%/an'},{id:'cac40',name:'CAC 40',rate:0.072,color:'#7F77DD',emoji:'🇫🇷',note:'~7%/an'},{id:'msci',name:'MSCI World',rate:0.085,color:'#AFA9EC',emoji:'🌍',note:'~8%/an'}],'Actions':[{id:'apple',name:'Apple',rate:0.29,color:'#aaaaaa',emoji:'🍎',note:'~29%/an'},{id:'nvidia',name:'Nvidia',rate:0.50,color:'#76b900',emoji:'🖥️',note:'~50%/an'},{id:'tesla',name:'Tesla',rate:0.35,color:'#e31937',emoji:'⚡',note:'~35%/an'},{id:'paypal',name:'PayPal',rate:0.08,color:'#003087',emoji:'💳',note:'~8%/an'},{id:'msi',name:'MSI',rate:0.18,color:'#d4537e',emoji:'🔴',note:'~18%/an'}],'Crypto':[{id:'btc',name:'Bitcoin',rate:0.80,color:'#EF9F27',emoji:'₿',note:'volatil'},{id:'eth',name:'Ethereum',rate:0.60,color:'#7F77DD',emoji:'Ξ',note:'volatil'},{id:'sol',name:'Solana',rate:1.20,color:'#9945FF',emoji:'◎',note:'très volatil'}],'Défensif':[{id:'gold',name:'Or',rate:0.07,color:'#BA7517',emoji:'🥇',note:'~7%/an'},{id:'livreta',name:'Livret A',rate:0.024,color:'#555555',emoji:'🏦',note:'2.4%/an'}]};
+const AFFILIATES=[{name:'Coinbase',logo:'₿',color:'#0052FF',bonus:'Bonus offert',desc:'Achète BTC, ETH et 200+ cryptos facilement.',url:'https://coinbase.com/join/7YWQV5N?src=android-link',primary:true},{name:'Bitstack',logo:'B',color:'#F7931A',bonus:'5€ en Bitcoin',desc:'Épargne et investis en Bitcoin automatiquement dès 1€.',url:'https://bitstack-app.com/referral/sOgEQDGkLlhY',primary:false},{name:'Trade Republic',logo:'T',color:'#29C880',bonus:'Bonus bienvenue',desc:"La façon la plus intelligente d'investir et épargner.",url:'https://refnocode.trade.re/3w051vr4',primary:false}];
+const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+let iAmounts={};EXPENSES.forEach(e=>iAmounts[e.id]=e.default);
+let iChart=null,activeGroup='Indices',selectedAssets=new Set(['sp500','nasdaq','cac40','msci']);
+const today=new Date();
+function fmtE(n){return Math.round(n).toLocaleString('fr-FR')+' €';}
+function buildDateSelects(){const mS=document.getElementById('selectMonth'),yS=document.getElementById('selectYear');MONTHS_FR.forEach((m,i)=>{const o=document.createElement('option');o.value=i;o.textContent=m;mS.appendChild(o);});for(let y=today.getFullYear();y>=2010;y--){const o=document.createElement('option');o.value=y;o.textContent=y;yS.appendChild(o);}const sa=new Date(today);sa.setMonth(sa.getMonth()-6);mS.value=sa.getMonth();yS.value=sa.getFullYear();mS.addEventListener('change',updateInvest);yS.addEventListener('change',updateInvest);}
+function getMonths(){const m=parseInt(document.getElementById('selectMonth').value),y=parseInt(document.getElementById('selectYear').value);const s=new Date(y,m,1);if(s>=today)return 0;return Math.max(1,(today.getFullYear()-y)*12+(today.getMonth()-m));}
+function updateDateInfo(){const mo=getMonths(),el=document.getElementById('dateInfo');if(!mo){el.innerHTML='—';return;}const y=Math.floor(mo/12),m=mo%12;let p=[];if(y)p.push(`<strong>${y} an${y>1?'s':''}</strong>`);if(m)p.push(`<strong>${m} mois</strong>`);el.innerHTML='→ '+p.join(' et ');}
+function totalMonthly(){return Object.values(iAmounts).reduce((a,b)=>a+b,0);}
+function compound(monthly,months,rate){const r=rate/12;if(!r)return monthly*months;return monthly*((Math.pow(1+r,months)-1)/r)*(1+r);}
+function buildExpenseGrid(){const g=document.getElementById('expenseGrid');g.innerHTML='';EXPENSES.forEach(exp=>{const c=document.createElement('div');c.className='expense-card'+(iAmounts[exp.id]>0?' active':'');c.innerHTML=`<div class="icon">${exp.icon}</div><div class="lbl">${exp.label}</div><div class="amount-row"><span class="currency">€</span><input type="number" min="0" max="9999" step="5" value="${iAmounts[exp.id]}"></div>`;g.appendChild(c);c.querySelector('input').addEventListener('input',e=>{iAmounts[exp.id]=parseFloat(e.target.value)||0;c.className='expense-card'+(iAmounts[exp.id]>0?' active':'');updateInvest();});c.querySelector('input').addEventListener('click',e=>e.stopPropagation());});}
+function buildAssetTabs(){const c=document.getElementById('assetTabs');c.innerHTML='';Object.keys(ASSET_GROUPS).forEach(group=>{const b=document.createElement('button');b.className='asset-tab'+(group===activeGroup?' active':'');b.textContent=group;b.onclick=()=>{activeGroup=group;selectedAssets=new Set(ASSET_GROUPS[group].map(a=>a.id));buildAssetTabs();renderAssets();};c.appendChild(b);});}
+function renderAssets(){const monthly=totalMonthly(),months=getMonths();const container=document.getElementById('assetCards');container.innerHTML='';const invested=monthly*months;ASSET_GROUPS[activeGroup].forEach(asset=>{const val=compound(monthly,months,asset.rate),gain=val-invested;const c=document.createElement('div');c.className='asset-card'+(selectedAssets.has(asset.id)?' selected':'');c.innerHTML=`<div class="a-name">${asset.emoji} ${asset.name} <span style="font-size:10px">${asset.note}</span></div><div class="a-val">${fmtE(val)}</div><div class="a-gain${gain<0?' neg':''}">${gain>=0?'+':''}${fmtE(gain)}</div><div class="a-multi">×${(val/Math.max(invested,1)).toFixed(2)}</div>`;c.addEventListener('click',()=>{if(selectedAssets.has(asset.id)){if(selectedAssets.size>1)selectedAssets.delete(asset.id);}else{selectedAssets.add(asset.id);}renderAssets();buildInvestChart(monthly,months);});container.appendChild(c);});}
+function buildInvestChart(monthly,months){const sY=parseInt(document.getElementById('selectYear').value),sM=parseInt(document.getElementById('selectMonth').value);const labels=[],invested=[];const vis=ASSET_GROUPS[activeGroup].filter(a=>selectedAssets.has(a.id));const datasets=vis.map(a=>({label:a.name,data:[],borderColor:a.color,backgroundColor:'transparent',tension:0.4,borderWidth:2,pointRadius:0}));for(let i=0;i<=months;i++){const d=new Date(sY,sM+i,1);labels.push(d.getMonth()===0||i===0||i===months?d.getFullYear().toString():'');invested.push(Math.round(monthly*i));vis.forEach((a,idx)=>datasets[idx].data.push(Math.round(compound(monthly,i,a.rate))));}const isDark=matchMedia('(prefers-color-scheme:dark)').matches;const gc=isDark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)',tc=isDark?'#555':'#999';if(iChart)iChart.destroy();iChart=new Chart(document.getElementById('growthChart'),{type:'line',data:{labels,datasets:[{label:'Investi',data:invested,borderColor:'rgba(255,255,255,0.15)',borderDash:[4,3],backgroundColor:'transparent',tension:0,borderWidth:1.5,pointRadius:0},...datasets]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:10}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M€':v>=1000?(v/1000).toFixed(0)+'k€':v+'€'}}}}});const leg=document.getElementById('chartLegend');leg.innerHTML='';[{label:'Investi',color:'rgba(255,255,255,0.2)'},...vis.map(a=>({label:a.name,color:a.color}))].forEach(item=>{const d=document.createElement('div');d.className='legend-item';d.innerHTML=`<span class="legend-dot" style="background:${item.color}"></span>${item.label}`;leg.appendChild(d);});}
+function buildAffiliates(){const g=document.getElementById('affGrid');g.innerHTML='';AFFILIATES.forEach(aff=>{const c=document.createElement('div');c.className='aff-card';c.innerHTML=`<div class="aff-top"><div class="aff-logo" style="background:${aff.color}">${aff.logo}</div><div><div class="aff-name">${aff.name}</div><div class="aff-bonus">${aff.bonus}</div></div></div><div class="aff-desc">${aff.desc}</div><a class="aff-btn${aff.primary?' primary':''}" href="${aff.url}" target="_blank" rel="noopener">Ouvrir un compte ↗</a>`;g.appendChild(c);});}
+function updateInvest(){const monthly=totalMonthly(),months=getMonths();updateDateInfo();document.getElementById('totalSpent').textContent=months>0?fmtE(monthly*months):'—';document.getElementById('totalYear').textContent=fmtE(monthly*12);document.getElementById('perDay').textContent=Math.round(monthly/30)+' € / jour';if(months>0){renderAssets();buildInvestChart(monthly,months);}}
+
+/* ══════════ IMMO ══════════ */
+const CITIES={
+  Roanne: {bas:{prix:55000,loyer:450,travaux:3000,taxe:600},mid:{prix:100000,loyer:650,travaux:2000,taxe:900}},
+  Tarbes: {bas:{prix:65000,loyer:480,travaux:3500,taxe:650},mid:{prix:115000,loyer:680,travaux:2500,taxe:950}},
+  Lyon:   {bas:{prix:150000,loyer:750,travaux:5000,taxe:1200},mid:{prix:280000,loyer:1100,travaux:4000,taxe:1800}},
+  Paris:  {bas:{prix:280000,loyer:1200,travaux:8000,taxe:2000},mid:{prix:500000,loyer:1900,travaux:6000,taxe:3000}},
+  Nice:   {bas:{prix:180000,loyer:900,travaux:5000,taxe:1400},mid:{prix:320000,loyer:1350,travaux:4000,taxe:2000}},
 };
-const AFFILIATES = [
-  { name: 'Coinbase',       logo: '₿', color: '#0052FF', bonus: 'Bonus offert',    desc: 'Achète BTC, ETH et 200+ cryptos facilement.',             url: 'https://coinbase.com/join/7YWQV5N?src=android-link', primary: true  },
-  { name: 'Bitstack',       logo: 'B', color: '#F7931A', bonus: '5€ en Bitcoin',   desc: 'Épargne et investis en Bitcoin automatiquement dès 1€.',  url: 'https://bitstack-app.com/referral/sOgEQDGkLlhY',     primary: false },
-  { name: 'Trade Republic', logo: 'T', color: '#29C880', bonus: 'Bonus bienvenue', desc: 'La façon la plus intelligente d\'investir et épargner.',  url: 'https://refnocode.trade.re/3w051vr4',                primary: false },
-];
-const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const IMMO_RATE=0.038,IMMO_YEARS=25;
+let activeCity='Roanne',activeTier='bas',immoParams={},immoChart=null;
+function immoDefaults(){const d=CITIES[activeCity][activeTier];return{prix:{v:d.prix,label:'Prix du bien',unit:'€'},apport:{v:Math.round(d.prix*0.1),label:'Apport (10%)',unit:'€'},loyer:{v:d.loyer,label:'Loyer mensuel',unit:'€/mois'},travaux:{v:d.travaux,label:'Travaux total',unit:'€'},taxe:{v:d.taxe,label:'Taxes annuelles',unit:'€/an'},vacance:{v:1,label:'Vacance locative',unit:'mois/an'}};}
+function mensualite(capital,rate,years){const r=rate/12,n=years*12;return capital*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);}
+function buildCityTabs(){const c=document.getElementById('cityTabs');c.innerHTML='';Object.keys(CITIES).forEach(city=>{const b=document.createElement('button');b.className='pill-tab'+(city===activeCity?' active':'');b.textContent=city;b.onclick=()=>{activeCity=city;immoParams=immoDefaults();buildImmoAll();};c.appendChild(b);});}
+function buildTierTabs(){const c=document.getElementById('tierTabs');c.innerHTML='';[{k:'bas',l:'Bas de gamme'},{k:'mid',l:'Milieu de gamme'}].forEach(({k,l})=>{const b=document.createElement('button');b.className='pill-tab'+(k===activeTier?' active':'');b.textContent=l;b.onclick=()=>{activeTier=k;immoParams=immoDefaults();buildImmoAll();};c.appendChild(b);});}
+function buildImmoParams(){const g=document.getElementById('paramsGrid');g.innerHTML='';Object.entries(immoParams).forEach(([key,p])=>{const card=document.createElement('div');card.className='param-card';card.innerHTML=`<div class="param-label">${p.label}</div><div class="param-inp"><input type="number" value="${p.v}" step="${key==='vacance'?1:500}"><span class="param-unit">${p.unit}</span></div>`;g.appendChild(card);card.querySelector('input').addEventListener('input',e=>{immoParams[key].v=parseFloat(e.target.value)||0;computeImmo();});});}
+function computeImmo(){const prix=immoParams.prix.v,apport=immoParams.apport.v,loyer=immoParams.loyer.v,travaux=immoParams.travaux.v,taxe=immoParams.taxe.v,vacance=immoParams.vacance.v;const capital=prix-apport+travaux;const mens=mensualite(capital,IMMO_RATE,IMMO_YEARS);const loyerAn=loyer*(12-vacance);const rows=[];let cumul=-apport,cumulLoyer=0,equilibre=null;for(let y=1;y<=IMMO_YEARS;y++){const creditAn=mens*12,cf=loyerAn-creditAn-taxe;cumul+=cf;cumulLoyer+=loyerAn;if(cumul>=0&&equilibre===null)equilibre=y;rows.push({y,creditAn,loyerAn,taxe,cf,cumul});}const rendBrut=(loyerAn/prix)*100,cfCredit=loyerAn-mens*12-taxe,cfLibre=loyerAn-taxe;const isDark=matchMedia('(prefers-color-scheme:dark)').matches;const gc=isDark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)',tc=isDark?'#555':'#999';
+const metrics=[{label:'Mensualité crédit',val:fmtE(mens),sub:'sur 25 ans',cls:'red'},{label:'Loyer net / an',val:fmtE(loyerAn),sub:`${immoParams.vacance.v} mois vacance`,cls:''},{label:'Cash-flow / an (crédit)',val:fmtE(cfCredit),sub:'loyer − crédit − taxes',cls:cfCredit>=0?'green':'red'},{label:'Cash-flow / an (libre)',val:fmtE(cfLibre),sub:'après 25 ans',cls:'green'},{label:'Rendement brut',val:rendBrut.toFixed(2)+'%',sub:'loyer brut / prix',cls:rendBrut>=5?'green':'amber'},{label:'Année équilibre',val:equilibre?'An '+equilibre:'>25 ans',sub:'cumul positif',cls:equilibre?'green':'red'},{label:'Capital emprunté',val:fmtE(capital),sub:'prix+travaux−apport',cls:''},{label:'Gain net 25 ans',val:fmtE(cumul),sub:'cumul cashflow',cls:cumul>=0?'green':'red'}];
+const mg=document.getElementById('immoMetrics');mg.innerHTML='';metrics.forEach(m=>{const c=document.createElement('div');c.className='metric-card '+(m.cls||'');c.innerHTML=`<div class="ml">${m.label}</div><div class="mv">${m.val}</div><div class="ms">${m.sub}</div>`;mg.appendChild(c);});
+document.getElementById('phaseBadges').innerHTML='<span class="phase-badge phase-credit">Phase crédit : ans 1–25</span><span class="phase-badge phase-libre">Phase libre : après an 25</span>';
+const labels=rows.map(r=>'An '+r.y),cumulData=rows.map(r=>Math.round(r.cumul)),loyerData=rows.map(r=>Math.round(r.loyerAn)),creditData=rows.map(r=>Math.round(-r.creditAn));
+if(immoChart)immoChart.destroy();immoChart=new Chart(document.getElementById('immoChart'),{type:'line',data:{labels,datasets:[{label:'Cash-flow cumulé',data:cumulData,borderColor:'#5DCAA5',backgroundColor:'transparent',borderWidth:2.5,tension:0.3,pointRadius:0},{label:'Loyers / an',data:loyerData,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]},{label:'Crédit / an',data:creditData,borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:8}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000||(v<=-1000)?(v/1000).toFixed(0)+'k€':v+'€'}}}}});
+const leg=document.getElementById('immoLegend');leg.innerHTML='';[{label:'Cash-flow cumulé',color:'#5DCAA5'},{label:'Loyers / an',color:'#378ADD'},{label:'Crédit / an',color:'#E24B4A'}].forEach(item=>{const d=document.createElement('div');d.className='legend-item';d.innerHTML=`<span class="legend-dot" style="background:${item.color}"></span>${item.label}`;leg.appendChild(d);});
+let html='<thead><tr><th>Année</th><th>Loyers reçus</th><th>Crédit payé</th><th>Taxes</th><th>Cash-flow</th><th>Cumulé</th></tr></thead><tbody>';rows.forEach(row=>{html+=`<tr><td>An ${row.y}</td><td>${fmtE(row.loyerAn)}</td><td class="tr">${fmtE(row.creditAn)}</td><td class="tr">${fmtE(row.taxe)}</td><td class="${row.cf>=0?'tg':'tr'}">${row.cf>=0?'+':''}${fmtE(row.cf)}</td><td class="${row.cumul>=0?'tg':'tr'}">${row.cumul>=0?'+':''}${fmtE(row.cumul)}</td></tr>`;});html+='</tbody>';document.getElementById('annualTable').innerHTML=html;}
+function buildImmoAll(){buildCityTabs();buildTierTabs();buildImmoParams();computeImmo();}
 
-let iAmounts = {};
-EXPENSES.forEach(e => iAmounts[e.id] = e.default);
-let iChart = null;
-let activeGroup = 'Indices';
-let selectedAssets = new Set(['sp500','nasdaq','cac40','msci']);
-const today = new Date();
-
-function fmtE(n) { return Math.round(n).toLocaleString('fr-FR') + ' €'; }
-
-function buildDateSelects() {
-  const mSel = document.getElementById('selectMonth');
-  const ySel = document.getElementById('selectYear');
-  MONTHS_FR.forEach((m,i) => { const o = document.createElement('option'); o.value=i; o.textContent=m; mSel.appendChild(o); });
-  for (let y = today.getFullYear(); y >= 2010; y--) { const o = document.createElement('option'); o.value=y; o.textContent=y; ySel.appendChild(o); }
-  const sixAgo = new Date(today); sixAgo.setMonth(sixAgo.getMonth()-6);
-  mSel.value = sixAgo.getMonth(); ySel.value = sixAgo.getFullYear();
-  mSel.addEventListener('change', updateInvest);
-  ySel.addEventListener('change', updateInvest);
-}
-
-function getMonths() {
-  const m = parseInt(document.getElementById('selectMonth').value);
-  const y = parseInt(document.getElementById('selectYear').value);
-  const start = new Date(y, m, 1);
-  if (start >= today) return 0;
-  return Math.max(1, (today.getFullYear()-y)*12 + (today.getMonth()-m));
-}
-
-function updateDateInfo() {
-  const months = getMonths();
-  const el = document.getElementById('dateInfo');
-  if (!months) { el.innerHTML='—'; return; }
-  const y = Math.floor(months/12), mo = months%12;
-  let p = [];
-  if (y)  p.push(`<strong>${y} an${y>1?'s':''}</strong>`);
-  if (mo) p.push(`<strong>${mo} mois</strong>`);
-  el.innerHTML = '→ ' + p.join(' et ');
-}
-
-function totalMonthly() { return Object.values(iAmounts).reduce((a,b)=>a+b,0); }
-
-function compound(monthly, months, rate) {
-  const r = rate/12;
-  if (!r) return monthly*months;
-  return monthly * ((Math.pow(1+r,months)-1)/r) * (1+r);
-}
-
-function buildExpenseGrid() {
-  const g = document.getElementById('expenseGrid'); g.innerHTML='';
-  EXPENSES.forEach(exp => {
-    const c = document.createElement('div');
-    c.className = 'expense-card' + (iAmounts[exp.id]>0?' active':'');
-    c.innerHTML = `<div class="icon">${exp.icon}</div><div class="lbl">${exp.label}</div><div class="amount-row"><span class="currency">€</span><input type="number" min="0" max="9999" step="5" value="${iAmounts[exp.id]}"></div>`;
-    g.appendChild(c);
-    c.querySelector('input').addEventListener('input', e => { iAmounts[exp.id]=parseFloat(e.target.value)||0; c.className='expense-card'+(iAmounts[exp.id]>0?' active':''); updateInvest(); });
-    c.querySelector('input').addEventListener('click', e => e.stopPropagation());
-  });
-}
-
-function buildAssetTabs() {
-  const c = document.getElementById('assetTabs'); c.innerHTML='';
-  Object.keys(ASSET_GROUPS).forEach(group => {
-    const b = document.createElement('button');
-    b.className = 'asset-tab' + (group===activeGroup?' active':'');
-    b.textContent = group;
-    b.onclick = () => { activeGroup=group; selectedAssets=new Set(ASSET_GROUPS[group].map(a=>a.id)); buildAssetTabs(); renderAssets(); };
-    c.appendChild(b);
-  });
-}
-
-function renderAssets() {
-  const monthly = totalMonthly(), months = getMonths();
-  const container = document.getElementById('assetCards'); container.innerHTML='';
-  const invested = monthly*months;
-  ASSET_GROUPS[activeGroup].forEach(asset => {
-    const val = compound(monthly,months,asset.rate), gain = val-invested;
-    const isSel = selectedAssets.has(asset.id);
-    const c = document.createElement('div');
-    c.className = 'asset-card'+(isSel?' selected':'');
-    c.innerHTML = `<div class="a-name">${asset.emoji} ${asset.name} <span style="font-size:10px">${asset.note}</span></div><div class="a-val">${fmtE(val)}</div><div class="a-gain${gain<0?' neg':''}">${gain>=0?'+':''}${fmtE(gain)}</div><div class="a-multi">×${(val/Math.max(invested,1)).toFixed(2)}</div>`;
-    c.addEventListener('click', () => { if(selectedAssets.has(asset.id)){if(selectedAssets.size>1)selectedAssets.delete(asset.id);}else{selectedAssets.add(asset.id);} renderAssets(); buildInvestChart(monthly,months); });
-    container.appendChild(c);
-  });
-}
-
-function buildInvestChart(monthly, months) {
-  const startY = parseInt(document.getElementById('selectYear').value);
-  const startM = parseInt(document.getElementById('selectMonth').value);
-  const labels=[], invested=[];
-  const vis = ASSET_GROUPS[activeGroup].filter(a=>selectedAssets.has(a.id));
-  const datasets = vis.map(a => ({label:a.name,data:[],borderColor:a.color,backgroundColor:'transparent',tension:0.4,borderWidth:2,pointRadius:0}));
-  for (let i=0;i<=months;i++) {
-    const d = new Date(startY,startM+i,1);
-    labels.push(d.getMonth()===0||i===0||i===months?d.getFullYear().toString():'');
-    invested.push(Math.round(monthly*i));
-    vis.forEach((a,idx)=>datasets[idx].data.push(Math.round(compound(monthly,i,a.rate))));
-  }
-  const isDark=matchMedia('(prefers-color-scheme:dark)').matches;
-  const gc=isDark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)', tc=isDark?'#555':'#999';
-  if(iChart)iChart.destroy();
-  iChart=new Chart(document.getElementById('growthChart'),{type:'line',data:{labels,datasets:[{label:'Investi',data:invested,borderColor:'rgba(255,255,255,0.15)',borderDash:[4,3],backgroundColor:'transparent',tension:0,borderWidth:1.5,pointRadius:0},...datasets]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:10}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M€':v>=1000?(v/1000).toFixed(0)+'k€':v+'€'}}}}});
-  const leg=document.getElementById('chartLegend'); leg.innerHTML='';
-  [{label:'Investi',color:'rgba(255,255,255,0.2)'},...vis.map(a=>({label:a.name,color:a.color}))].forEach(item=>{const d=document.createElement('div');d.className='legend-item';d.innerHTML=`<span class="legend-dot" style="background:${item.color}"></span>${item.label}`;leg.appendChild(d);});
-}
-
-function buildAffiliates() {
-  const g=document.getElementById('affGrid'); g.innerHTML='';
-  AFFILIATES.forEach(aff=>{
-    const c=document.createElement('div'); c.className='aff-card';
-    c.innerHTML=`<div class="aff-top"><div class="aff-logo" style="background:${aff.color}">${aff.logo}</div><div><div class="aff-name">${aff.name}</div><div class="aff-bonus">${aff.bonus}</div></div></div><div class="aff-desc">${aff.desc}</div><a class="aff-btn${aff.primary?' primary':''}" href="${aff.url}" target="_blank" rel="noopener">Ouvrir un compte ↗</a>`;
-    g.appendChild(c);
-  });
-}
-
-function updateInvest() {
-  const monthly=totalMonthly(), months=getMonths();
-  updateDateInfo();
-  document.getElementById('totalSpent').textContent = months>0?fmtE(monthly*months):'—';
-  document.getElementById('totalYear').textContent = fmtE(monthly*12);
-  document.getElementById('perDay').textContent = Math.round(monthly/30)+' € / jour';
-  if(months>0){ renderAssets(); buildInvestChart(monthly,months); }
-}
-
-/* ══════════════════════════════════════
-   IMMO PAGE
-══════════════════════════════════════ */
-const CITIES = {
-  Roanne: { bas:{prix:55000, loyer:450, travaux:3000, taxe:600 }, mid:{prix:100000,loyer:650, travaux:2000,taxe:900 } },
-  Lyon:   { bas:{prix:150000,loyer:750, travaux:5000, taxe:1200}, mid:{prix:280000,loyer:1100,travaux:4000,taxe:1800} },
-  Paris:  { bas:{prix:280000,loyer:1200,travaux:8000, taxe:2000}, mid:{prix:500000,loyer:1900,travaux:6000,taxe:3000} },
-  Nice:   { bas:{prix:180000,loyer:900, travaux:5000, taxe:1400}, mid:{prix:320000,loyer:1350,travaux:4000,taxe:2000} },
-};
-const IMMO_RATE = 0.038, IMMO_YEARS = 25;
-let activeCity='Roanne', activeTier='bas', immoParams={}, immoChart=null;
-
-function immoDefaults() {
-  const d = CITIES[activeCity][activeTier];
-  return {
-    prix:   {v:d.prix,   label:'Prix du bien',    unit:'€'     },
-    apport: {v:Math.round(d.prix*0.1), label:'Apport (10%)',  unit:'€'     },
-    loyer:  {v:d.loyer,  label:'Loyer mensuel',   unit:'€/mois'},
-    travaux:{v:d.travaux,label:'Travaux total',    unit:'€'     },
-    taxe:   {v:d.taxe,   label:'Taxes annuelles', unit:'€/an'  },
-    vacance:{v:1,        label:'Vacance locative', unit:'mois/an'},
-  };
-}
-
-function mensualite(capital, rate, years) {
-  const r=rate/12, n=years*12;
-  return capital*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
-}
-
-function buildCityTabs() {
-  const c=document.getElementById('cityTabs'); c.innerHTML='';
-  Object.keys(CITIES).forEach(city=>{
-    const b=document.createElement('button');
-    b.className='pill-tab'+(city===activeCity?' active':'');
-    b.textContent=city;
-    b.onclick=()=>{activeCity=city;immoParams=immoDefaults();buildImmoAll();};
-    c.appendChild(b);
-  });
-}
-
-function buildTierTabs() {
-  const c=document.getElementById('tierTabs'); c.innerHTML='';
-  [{k:'bas',l:'Bas de gamme'},{k:'mid',l:'Milieu de gamme'}].forEach(({k,l})=>{
-    const b=document.createElement('button');
-    b.className='pill-tab'+(k===activeTier?' active':'');
-    b.textContent=l;
-    b.onclick=()=>{activeTier=k;immoParams=immoDefaults();buildImmoAll();};
-    c.appendChild(b);
-  });
-}
-
-function buildImmoParams() {
-  const g=document.getElementById('paramsGrid'); g.innerHTML='';
-  Object.entries(immoParams).forEach(([key,p])=>{
-    const card=document.createElement('div'); card.className='param-card';
-    card.innerHTML=`<div class="param-label">${p.label}</div><div class="param-inp"><input type="number" value="${p.v}" step="${key==='vacance'?1:500}"><span class="param-unit">${p.unit}</span></div>`;
-    g.appendChild(card);
-    card.querySelector('input').addEventListener('input',e=>{immoParams[key].v=parseFloat(e.target.value)||0;computeImmo();});
-  });
-}
-
-function computeImmo() {
-  const prix=immoParams.prix.v, apport=immoParams.apport.v, loyer=immoParams.loyer.v;
-  const travaux=immoParams.travaux.v, taxe=immoParams.taxe.v, vacance=immoParams.vacance.v;
-  const capital=prix-apport+travaux;
-  const mens=mensualite(capital,IMMO_RATE,IMMO_YEARS);
-  const loyerAn=loyer*(12-vacance);
-  const rows=[];
-  let cumul=-apport, cumulLoyer=0, equilibre=null;
-  for(let y=1;y<=IMMO_YEARS;y++){
-    const creditAn=mens*12, cf=loyerAn-creditAn-taxe;
-    cumul+=cf; cumulLoyer+=loyerAn;
-    if(cumul>=0&&equilibre===null)equilibre=y;
-    rows.push({y,creditAn,loyerAn,taxe,cf,cumul});
-  }
-  const rendBrut=(loyerAn/prix)*100;
-  const cfCredit=loyerAn-mens*12-taxe;
-  const cfLibre=loyerAn-taxe;
-
-  const isDark=matchMedia('(prefers-color-scheme:dark)').matches;
-  const gc=isDark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)', tc=isDark?'#555':'#999';
-
-  // Metrics
-  const metrics=[
-    {label:'Mensualité crédit', val:fmtE(mens),          sub:'sur 25 ans',              cls: 'red'   },
-    {label:'Loyer net / an',    val:fmtE(loyerAn),        sub:`${vacance} mois vacance`, cls: ''      },
-    {label:'Cash-flow / an (crédit)', val:fmtE(cfCredit), sub:'loyer − crédit − taxes',  cls: cfCredit>=0?'green':'red'},
-    {label:'Cash-flow / an (libre)',  val:fmtE(cfLibre),  sub:'après 25 ans',            cls: 'green' },
-    {label:'Rendement brut',    val:rendBrut.toFixed(2)+'%', sub:'loyer brut / prix',    cls: rendBrut>=5?'green':'amber'},
-    {label:'Année équilibre',   val:equilibre?'An '+equilibre:'>25 ans', sub:'cumul positif', cls:equilibre?'green':'red'},
-    {label:'Capital emprunté',  val:fmtE(capital),        sub:'prix+travaux−apport',     cls: ''      },
-    {label:'Gain net 25 ans',   val:fmtE(cumul),          sub:'cumul cashflow',          cls: cumul>=0?'green':'red'},
-  ];
-  const mg=document.getElementById('immoMetrics'); mg.innerHTML='';
-  metrics.forEach(m=>{ const c=document.createElement('div'); c.className='metric-card '+(m.cls||''); c.innerHTML=`<div class="ml">${m.label}</div><div class="mv">${m.val}</div><div class="ms">${m.sub}</div>`; mg.appendChild(c); });
-
-  // Phase badges
-  document.getElementById('phaseBadges').innerHTML=`<span class="phase-badge phase-credit">Phase crédit : ans 1–25</span><span class="phase-badge phase-libre">Phase libre : après an 25</span>`;
-
-  // Chart
-  const labels=rows.map(r=>'An '+r.y);
-  const cumulData=rows.map(r=>Math.round(r.cumul));
-  const loyerData=rows.map(r=>Math.round(r.loyerAn));
-  const creditData=rows.map(r=>Math.round(-r.creditAn));
-  if(immoChart)immoChart.destroy();
-  immoChart=new Chart(document.getElementById('immoChart'),{type:'line',data:{labels,datasets:[
-    {label:'Cash-flow cumulé',data:cumulData,borderColor:'#5DCAA5',backgroundColor:'transparent',borderWidth:2.5,tension:0.3,pointRadius:0},
-    {label:'Loyers / an',data:loyerData,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]},
-    {label:'Crédit / an',data:creditData,borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]},
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:8}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000||(v<=-1000)?(v/1000).toFixed(0)+'k€':v+'€'}}}}});
-
-  // Legend
-  const leg=document.getElementById('immoLegend'); leg.innerHTML='';
-  [{label:'Cash-flow cumulé',color:'#5DCAA5'},{label:'Loyers / an',color:'#378ADD'},{label:'Crédit / an',color:'#E24B4A'}].forEach(item=>{ const d=document.createElement('div'); d.className='legend-item'; d.innerHTML=`<span class="legend-dot" style="background:${item.color}"></span>${item.label}`; leg.appendChild(d); });
-
-  // Table
-  const tbl=document.getElementById('annualTable');
-  let html=`<thead><tr><th>Année</th><th>Loyers reçus</th><th>Crédit payé</th><th>Taxes</th><th>Cash-flow</th><th>Cumulé</th></tr></thead><tbody>`;
-  rows.forEach(row=>{
-    html+=`<tr><td>An ${row.y}</td><td>${fmtE(row.loyerAn)}</td><td class="tr">${fmtE(row.creditAn)}</td><td class="tr">${fmtE(row.taxe)}</td><td class="${row.cf>=0?'tg':'tr'}">${row.cf>=0?'+':''}${fmtE(row.cf)}</td><td class="${row.cumul>=0?'tg':'tr'}">${row.cumul>=0?'+':''}${fmtE(row.cumul)}</td></tr>`;
-  });
-  html+='</tbody>'; tbl.innerHTML=html;
-}
-
-function buildImmoAll() {
-  buildCityTabs(); buildTierTabs(); buildImmoParams(); computeImmo();
-}
-
-/* ── INIT ── */
-buildDateSelects(); buildExpenseGrid(); buildAssetTabs(); buildAffiliates(); updateInvest();
-immoParams=immoDefaults(); buildImmoAll();
+buildDateSelects();buildExpenseGrid();buildAssetTabs();buildAffiliates();updateInvest();
+immoParams=immoDefaults();buildImmoAll();
 </script>
 </body>
 </html>
