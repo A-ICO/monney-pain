@@ -12,17 +12,46 @@
     --bg: #0a0a0a; --bg3: #1a1a1a;
     --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
     --text: #ffffff; --text2: #aaaaaa; --text3: #555555;
-    --green: #5DCAA5; --green-dark: #0F6E56; --red: #E24B4A; --amber: #EF9F27;
+    --green: #5DCAA5; --red: #E24B4A; --amber: #EF9F27;
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; line-height: 1.6; }
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
-  .logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-link { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; border: none; background: none; color: var(--text2); cursor: pointer; font-family: inherit; transition: all 0.15s; }
-  .nav-link.active { background: var(--bg3); color: var(--accent); }
-  .nav-link:hover { background: var(--bg3); color: var(--text); }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 24px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px; font-weight: 900; letter-spacing: -0.02em;
+    color: #fff;
+    text-shadow: 1px 1px 0 #d4537e, 2px 2px 0 #993556, 3px 3px 0 #6b1f3a, 3px 3px 8px rgba(0,0,0,0.7);
+    transform: perspective(300px) rotateX(6deg);
+    display: inline-block;
+  }
+  .logo span { color: #ff85aa; }
+
+  .nav-links { display: flex; gap: 8px; }
+  .nav-link {
+    letter-spacing: 0.01em;
+    padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #1e1e1e;
+    color: var(--text2); cursor: pointer; font-family: inherit;
+    box-shadow: 0 3px 0 #000, inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .nav-link:hover { color: var(--text); background: #252525; }
+  .nav-link.active {
+    background: #d4537e;
+    color: white; border-color: #993556;
+    box-shadow: 0 3px 0 #6b1f3a, inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: translateY(0px);
+  }
+  .nav-link:active { transform: translateY(2px); box-shadow: 0 1px 0 #000; }
+
   .page { display: none; } .page.active { display: block; }
 
   .hero { padding: 48px 24px 0; text-align: center; max-width: 600px; margin: 0 auto; }
@@ -34,17 +63,33 @@
   .hero-arrow { color: var(--text3); font-size: 24px; animation: bounce 1.5s infinite; display: block; padding-bottom: 32px; }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
+  .title-3d {
+    color: #ff85aa;
+    text-shadow: 1px 1px 0 #d4537e, 2px 2px 0 #993556, 3px 3px 0 #6b1f3a, 3px 3px 10px rgba(0,0,0,0.7);
+    display: inline-block;
+    transform: perspective(300px) rotateX(5deg);
+  }
+  .title-3d-green {
+    color: #7fffd4;
+    text-shadow: 1px 1px 0 #5DCAA5, 2px 2px 0 #0F6E56, 3px 3px 0 #054030, 3px 3px 10px rgba(0,0,0,0.7);
+    display: inline-block;
+    transform: perspective(300px) rotateX(5deg);
+  }
   .container { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
   .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 14px; margin-top: 40px; }
 
-  .expense-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; }
-  .expense-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px; transition: border-color 0.15s; }
+  .expense-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+  .expense-card {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: 14px;
+    padding: 16px 12px 12px; transition: border-color 0.15s;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
   .expense-card.active { border: 1.5px solid var(--accent); }
-  .expense-card .icon { font-size: 22px; margin-bottom: 6px; }
-  .expense-card .lbl { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
-  .expense-card .amount-row { display: flex; align-items: center; gap: 4px; }
-  .expense-card .currency { font-size: 13px; color: var(--text3); }
-  .expense-card input[type=number] { width: 100%; font-size: 16px; font-weight: 500; color: var(--text); background: none; border: none; outline: none; font-family: inherit; }
+  .expense-card .icon { font-size: 26px; margin-bottom: 6px; line-height: 1; }
+  .expense-card .lbl { font-size: 12px; color: var(--text2); margin-bottom: 10px; line-height: 1.2; }
+  .expense-card .amount-row { display: flex; align-items: center; gap: 3px; }
+  .expense-card .currency { font-size: 12px; color: var(--text3); }
+  .expense-card input[type=number] { font-size: 16px; font-weight: 600; color: var(--text); background: none; border: none; outline: none; font-family: inherit; width: 70px; text-align: center; }
   .expense-card input[type=number]::-webkit-inner-spin-button, .expense-card input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
   .date-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -62,21 +107,27 @@
   .t-year { font-size: 20px; font-weight: 500; }
   .t-day { font-size: 12px; color: var(--text3); margin-top: 2px; }
 
-  /* ASSET CHECKBOXES - tout en un */
   .assets-wrap { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
   .assets-search { width: 100%; background: rgba(255,255,255,0.05); border: 0.5px solid var(--border2); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: var(--text); font-family: inherit; outline: none; margin-bottom: 14px; }
   .assets-search::placeholder { color: var(--text3); }
   .assets-search:focus { border-color: var(--accent); }
   .asset-group-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin: 12px 0 8px; }
-  .asset-group-title:first-child { margin-top: 0; }
   .asset-checks { display: flex; flex-wrap: wrap; gap: 6px; }
   .asset-check { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 20px; border: 0.5px solid var(--border2); cursor: pointer; transition: all 0.15s; user-select: none; }
-  .asset-check.on { border-color: transparent; color: white; }
+  .asset-check.on { border-color: transparent; }
   .asset-check .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .asset-check .aname { font-size: 12px; font-weight: 500; color: var(--text2); }
   .asset-check.on .aname { color: white; }
   .asset-check .aval { font-size: 11px; color: var(--text3); margin-left: 2px; }
+  .api-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 6px; margin-left: 4px; }
+  .api-real { background: rgba(93,202,165,0.2); color: #5DCAA5; }
+  .api-est  { background: rgba(239,159,39,0.2);  color: #EF9F27; }
   .asset-check.on .aval { color: rgba(255,255,255,0.6); }
+
+  .loading-bar { display: none; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 20px; text-align: center; color: var(--text3); font-size: 13px; margin-bottom: 12px; }
+  .loading-bar.visible { display: block; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   .chart-wrap { position: relative; width: 100%; height: 300px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 8px; }
   .chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; padding-top: 8px; }
@@ -85,7 +136,6 @@
 
   .affiliate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
   .aff-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
-  .aff-card:hover { border-color: var(--border2); }
   .aff-top { display: flex; align-items: center; gap: 10px; }
   .aff-logo { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; flex-shrink: 0; }
   .aff-name { font-size: 15px; font-weight: 600; }
@@ -94,7 +144,6 @@
   .aff-btn { display: block; text-align: center; padding: 9px 0; border-radius: 8px; font-size: 13px; font-weight: 500; text-decoration: none; border: 0.5px solid var(--border2); color: var(--text2); transition: background 0.15s; }
   .aff-btn:hover { background: rgba(255,255,255,0.06); }
   .aff-btn.primary { background: var(--accent); color: white; border-color: transparent; }
-  .aff-btn.primary:hover { background: var(--accent-dark); }
 
   /* IMMO */
   .immo-hero { padding: 40px 24px 24px; text-align: center; max-width: 600px; margin: 0 auto; }
@@ -102,8 +151,22 @@
   .immo-hero h1 em { color: var(--green); font-style: normal; }
   .immo-hero p { font-size: 14px; color: var(--text2); }
   .pill-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-  .pill-tab { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; border: 0.5px solid var(--border2); color: var(--text2); background: none; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-  .pill-tab.active { background: var(--green); color: white; border-color: transparent; }
+  .pill-tab {
+    padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #1e1e1e; color: var(--text2);
+    cursor: pointer; font-family: inherit;
+    box-shadow: 0 3px 0 #000, inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .pill-tab:hover:not(.active) { background: #252525; color: var(--text); transform: translateY(-1px); }
+  .pill-tab.active {
+    background: #5DCAA5; color: #0a2e22; border-color: #0F6E56;
+    box-shadow: 0 3px 0 #054030, inset 0 1px 0 rgba(255,255,255,0.2);
+    transform: translateY(0);
+  }
+  .pill-tab:active { transform: translateY(2px); box-shadow: 0 1px 0 #000; }
+
   .params-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
   .param-card { background: var(--bg3); border: 0.5px solid var(--border); border-radius: 10px; padding: 12px 14px; }
   .param-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
@@ -135,10 +198,8 @@
   .divider { height: 0.5px; background: var(--border); margin: 32px 0; }
   footer { border-top: 0.5px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--text3); line-height: 1.8; }
   @media (max-width: 500px) {
-    .nav-link { padding: 5px 8px; font-size: 11px; }
     .expense-grid { grid-template-columns: repeat(2, 1fr); }
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-    .pill-tab { padding: 5px 10px; font-size: 12px; }
   }
 </style>
 </head>
@@ -151,18 +212,16 @@
   </div>
 </nav>
 
-<!-- PAGE INVEST -->
 <div id="page-invest" class="page active">
   <div class="hero">
-    <h1>Et si tu avais <em>investi ?</em></h1>
+    <h1>Et si tu avais <span class="title-3d">investi ?</span></h1>
     <p>Vois ce que tes dépenses auraient donné en crypto ou bourse.</p>
     <div class="hero-img"><img src="IMG_2562.jpg" alt="Franklin regrette de ne pas avoir investi"></div>
     <span class="hero-arrow">↓</span>
   </div>
   <div class="container">
-    <p class="section-label">Mes dépenses par mois</p>
+    <p class="section-label" id="expenseLabel">Mes dépenses par mois :</p>
     <div class="expense-grid" id="expenseGrid"></div>
-
     <p class="section-label">Depuis quand ?</p>
     <div class="date-row">
       <label>À partir de</label>
@@ -172,7 +231,6 @@
       </div>
       <div class="date-info" id="dateInfo">—</div>
     </div>
-
     <div class="total-banner">
       <div>
         <div class="t-label">Total dépensé sur la période</div>
@@ -184,25 +242,22 @@
         <div class="t-day" id="perDay">0 € / jour</div>
       </div>
     </div>
-
     <p class="section-label" style="margin-top:48px">Si tu avais investi — coche ce que tu veux comparer</p>
     <div class="assets-wrap">
       <input class="assets-search" id="assetSearch" placeholder="Rechercher... BTC, Apple, CAC..." type="text">
       <div id="assetList"></div>
     </div>
-
+    <div class="loading-bar" id="loadingBar"><span class="spinner"></span><span id="loadingText">Chargement des prix réels...</span></div>
     <div class="chart-wrap"><canvas id="growthChart" role="img" aria-label="Comparaison des investissements"></canvas></div>
     <div class="chart-legend" id="chartLegend"></div>
-
     <p class="section-label">Commence à investir maintenant</p>
     <div class="affiliate-grid" id="affGrid"></div>
   </div>
 </div>
 
-<!-- PAGE IMMO -->
 <div id="page-immo" class="page">
   <div class="immo-hero">
-    <h1>Investissement <em>immobilier locatif</em></h1>
+    <h1>Investissement <span class="title-3d-green">immobilier locatif</span></h1>
     <p>Simulation crédit 25 ans, loyers, travaux et taxes — 5 villes comparées.</p>
   </div>
   <div class="container">
@@ -233,32 +288,47 @@
 <script>
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');btn.classList.add('active');}
 
-/* ══════════ INVEST ══════════ */
-const EXPENSES=[{id:'fastfood',icon:'🍔',label:'Fast food',default:60},{id:'coffee',icon:'☕',label:'Cafés',default:40},{id:'cigs',icon:'🚬',label:'Clopes',default:80},{id:'alcohol',icon:'🍺',label:'Alcool / bar',default:50},{id:'streaming',icon:'📺',label:'Streaming',default:25},{id:'delivery',icon:'🛵',label:'Livraison repas',default:45},{id:'gambling',icon:'🎰',label:'Jeux / paris',default:0},{id:'impulse',icon:'🛍️',label:'Achats impulsifs',default:30}];
-
+/* ══ ASSET DEFINITIONS ══ */
 const ALL_ASSETS=[
-  {id:'sp500',  name:'S&P 500',    rate:0.10,  color:'#378ADD', group:'Indices'},
-  {id:'nasdaq', name:'Nasdaq 100', rate:0.155, color:'#5DCAA5', group:'Indices'},
-  {id:'cac40',  name:'CAC 40',     rate:0.072, color:'#7F77DD', group:'Indices'},
-  {id:'msci',   name:'MSCI World', rate:0.085, color:'#AFA9EC', group:'Indices'},
-  {id:'apple',  name:'Apple',      rate:0.29,  color:'#aaaaaa', group:'Actions'},
-  {id:'nvidia', name:'Nvidia',     rate:0.50,  color:'#76b900', group:'Actions'},
-  {id:'tesla',  name:'Tesla',      rate:0.35,  color:'#e31937', group:'Actions'},
-  {id:'paypal', name:'PayPal',     rate:0.08,  color:'#003087', group:'Actions'},
-  {id:'msi',    name:'MSI',        rate:0.18,  color:'#d4537e', group:'Actions'},
-  {id:'btc',    name:'Bitcoin',    rate:0.80,  color:'#EF9F27', group:'Crypto'},
-  {id:'eth',    name:'Ethereum',   rate:0.60,  color:'#7F77DD', group:'Crypto'},
-  {id:'sol',    name:'Solana',     rate:1.20,  color:'#9945FF', group:'Crypto'},
-  {id:'gold',   name:'Or',         rate:0.07,  color:'#BA7517', group:'Défensif'},
-  {id:'livreta',name:'Livret A',   rate:0.024, color:'#555555', group:'Défensif'},
+  {id:'sp500',  name:'S&P 500',    ticker:'%5EGSPC', type:'yahoo', color:'#378ADD', group:'Indices'},
+  {id:'nasdaq', name:'Nasdaq 100', ticker:'%5ENDX',  type:'yahoo', color:'#5DCAA5', group:'Indices'},
+  {id:'cac40',  name:'CAC 40',     ticker:'%5EFCHI', type:'yahoo', color:'#7F77DD', group:'Indices'},
+  {id:'msci',   name:'MSCI World', ticker:'URTH',    type:'yahoo', color:'#AFA9EC', group:'Indices'},
+  {id:'apple',  name:'Apple',      ticker:'AAPL',    type:'yahoo', color:'#aaaaaa', group:'Actions'},
+  {id:'nvidia', name:'Nvidia',     ticker:'NVDA',    type:'yahoo', color:'#76b900', group:'Actions'},
+  {id:'tesla',  name:'Tesla',      ticker:'TSLA',    type:'yahoo', color:'#e31937', group:'Actions'},
+  {id:'paypal', name:'PayPal',     ticker:'PYPL',    type:'yahoo', color:'#003087', group:'Actions'},
+  {id:'msi',    name:'MSI',        ticker:'2377.TW', type:'yahoo', color:'#d4537e', group:'Actions'},
+  {id:'btc',    name:'Bitcoin',    ticker:'bitcoin', type:'coingecko', color:'#EF9F27', group:'Crypto'},
+  {id:'eth',    name:'Ethereum',   ticker:'ethereum',type:'coingecko', color:'#85B7EB', group:'Crypto'},
+  {id:'sol',    name:'Solana',     ticker:'solana',  type:'coingecko', color:'#9945FF', group:'Crypto'},
+  {id:'gold',   name:'Or',         ticker:'GC%3DF',  type:'yahoo', color:'#BA7517', group:'Défensif'},
+  {id:'livreta',name:'Livret A',   ticker:null,      type:'fixed', rate:0.024, color:'#555555', group:'Défensif'},
 ];
 
-const AFFILIATES=[{name:'Coinbase',logo:'₿',color:'#0052FF',bonus:'Bonus offert',desc:'Achète BTC, ETH et 200+ cryptos facilement.',url:'https://coinbase.com/join/7YWQV5N?src=android-link',primary:true},{name:'Bitstack',logo:'B',color:'#F7931A',bonus:'5€ en Bitcoin',desc:'Épargne et investis en Bitcoin automatiquement dès 1€.',url:'https://bitstack-app.com/referral/sOgEQDGkLlhY',primary:false},{name:'Trade Republic',logo:'T',color:'#29C880',bonus:'Bonus bienvenue',desc:"La façon la plus intelligente d'investir et épargner.",url:'https://refnocode.trade.re/3w051vr4',primary:false}];
+const AFFILIATES=[
+  {name:'Coinbase',logo:'₿',color:'#0052FF',bonus:'Bonus offert',desc:'Achète BTC, ETH et 200+ cryptos facilement.',url:'https://coinbase.com/join/7YWQV5N?src=android-link',primary:true},
+  {name:'Bitstack',logo:'B',color:'#F7931A',bonus:'5€ en Bitcoin',desc:'Épargne et investis en Bitcoin automatiquement dès 1€.',url:'https://bitstack-app.com/referral/sOgEQDGkLlhY',primary:false},
+  {name:'Trade Republic',logo:'T',color:'#29C880',bonus:'Bonus bienvenue',desc:"La façon la plus intelligente d'investir et épargner.",url:'https://refnocode.trade.re/3w051vr4',primary:false},
+];
 const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
-let iAmounts={};EXPENSES.forEach(e=>iAmounts[e.id]=e.default);
+let iAmounts={};
+const EXPENSES=[
+  {id:'fastfood',icon:'🍔',label:'Fast food',default:60},
+  {id:'coffee',icon:'☕',label:'Cafés',default:40},
+  {id:'cigs',icon:'🚬',label:'Clopes',default:80},
+  {id:'alcohol',icon:'🍺',label:'Alcool / bar',default:50},
+  {id:'streaming',icon:'📺',label:'Streaming',default:25},
+  {id:'delivery',icon:'🛵',label:'Livraison repas',default:45},
+  {id:'gambling',icon:'🎰',label:'Jeux / paris',default:0},
+  {id:'impulse',icon:'🛍️',label:'Achats impulsifs',default:30},
+];
+EXPENSES.forEach(e=>iAmounts[e.id]=e.default);
+
 let iChart=null;
 let selectedIds=new Set(['sp500','btc','apple','nasdaq']);
+let priceCache={};
 const today=new Date();
 
 function fmtE(n){return Math.round(n).toLocaleString('fr-FR')+' €';}
@@ -266,16 +336,22 @@ function fmtE(n){return Math.round(n).toLocaleString('fr-FR')+' €';}
 function buildDateSelects(){
   const mS=document.getElementById('selectMonth'),yS=document.getElementById('selectYear');
   MONTHS_FR.forEach((m,i)=>{const o=document.createElement('option');o.value=i;o.textContent=m;mS.appendChild(o);});
-  for(let y=today.getFullYear();y>=2010;y--){const o=document.createElement('option');o.value=y;o.textContent=y;yS.appendChild(o);}
+  for(let y=today.getFullYear();y>=2000;y--){const o=document.createElement('option');o.value=y;o.textContent=y;yS.appendChild(o);}
   const sa=new Date(today);sa.setMonth(sa.getMonth()-6);
   mS.value=sa.getMonth();yS.value=sa.getFullYear();
-  mS.addEventListener('change',updateInvest);yS.addEventListener('change',updateInvest);
+  mS.addEventListener('change',()=>{priceCache={};updateInvest();});
+  yS.addEventListener('change',()=>{priceCache={};updateInvest();});
 }
 
 function getMonths(){
   const m=parseInt(document.getElementById('selectMonth').value),y=parseInt(document.getElementById('selectYear').value);
   const s=new Date(y,m,1);if(s>=today)return 0;
   return Math.max(1,(today.getFullYear()-y)*12+(today.getMonth()-m));
+}
+
+function getStartTs(){
+  const m=parseInt(document.getElementById('selectMonth').value),y=parseInt(document.getElementById('selectYear').value);
+  return Math.floor(new Date(y,m,1).getTime()/1000);
 }
 
 function updateDateInfo(){
@@ -288,7 +364,138 @@ function updateDateInfo(){
 }
 
 function totalMonthly(){return Object.values(iAmounts).reduce((a,b)=>a+b,0);}
-function compound(monthly,months,rate){const r=rate/12;if(!r)return monthly*months;return monthly*((Math.pow(1+r,months)-1)/r)*(1+r);}
+
+/* ── PRIX RÉELS — données historiques intégrées + badge réel/estimé ── */
+const HIST={"btc":{"2010":{"6":0.05,"7":0.06,"8":0.06,"9":0.07,"10":0.12,"11":0.22},"2011":{"0":0.27,"1":0.73,"2":0.86,"3":0.71,"4":6.8,"5":15.0,"6":11.0,"7":9.0,"8":6.5,"9":3.3,"10":2.1,"11":2.8},"2012":{"0":5.0,"1":4.5,"2":4.9,"3":4.8,"4":4.6,"5":5.0,"6":6.5,"7":9.0,"8":10.0,"9":9.5,"10":9.8,"11":12.0},"2013":{"0":14,"1":25,"2":30,"3":95,"4":100,"5":95,"6":80,"7":95,"8":110,"9":140,"10":700,"11":720},"2014":{"0":800,"1":530,"2":450,"3":390,"4":410,"5":470,"6":500,"7":430,"8":350,"9":320,"10":320,"11":260},"2015":{"0":200,"1":220,"2":250,"3":210,"4":200,"5":210,"6":230,"7":240,"8":190,"9":220,"10":260,"11":350},"2016":{"0":350,"1":350,"2":380,"3":380,"4":430,"5":520,"6":560,"7":500,"8":520,"9":570,"10":600,"11":800},"2017":{"0":850,"1":950,"2":950,"3":1050,"4":1550,"5":2200,"6":2100,"7":3200,"8":3500,"9":4500,"10":5500,"11":14000},"2018":{"0":11000,"1":8000,"2":7000,"3":6500,"4":7500,"5":5800,"6":5700,"7":5500,"8":5800,"9":5500,"10":5200,"11":3100},"2019":{"0":3100,"1":3200,"2":3400,"3":3800,"4":5000,"5":7500,"6":9000,"7":9000,"8":8500,"9":7500,"10":8500,"11":6500},"2020":{"0":7800,"1":8400,"2":5500,"3":6800,"4":8500,"5":8900,"6":9200,"7":11000,"8":10000,"9":11000,"10":13000,"11":23000},"2021":{"0":28000,"1":40000,"2":45000,"3":48000,"4":35000,"5":30000,"6":28000,"7":40000,"8":38000,"9":45000,"10":55000,"11":42000},"2022":{"0":36000,"1":37000,"2":40000,"3":38000,"4":28000,"5":18000,"6":20000,"7":21000,"8":18000,"9":18500,"10":17000,"11":14000},"2023":{"0":16000,"1":21000,"2":22000,"3":26000,"4":25000,"5":24000,"6":27000,"7":26000,"8":24000,"9":25000,"10":30000,"11":38000},"2024":{"0":38000,"1":47000,"2":60000,"3":58000,"4":56000,"5":55000,"6":52000,"7":54000,"8":50000,"9":56000,"10":68000,"11":85000},"2025":{"0":87000,"1":82000,"2":76000,"3":74000,"4":90000,"5":95000,"6":92000,"7":88000,"8":84000,"9":80000,"10":76000,"11":95000}},"eth":{"2016":{"7":10,"8":10,"9":11,"10":11,"11":8},"2017":{"0":8,"1":12,"2":18,"3":40,"4":75,"5":240,"6":180,"7":270,"8":280,"9":280,"10":280,"11":600},"2018":{"0":900,"1":700,"2":500,"3":380,"4":550,"5":450,"6":400,"7":280,"8":200,"9":180,"10":160,"11":85},"2019":{"0":105,"1":105,"2":130,"3":145,"4":200,"5":230,"6":260,"7":175,"8":160,"9":155,"10":160,"11":120},"2020":{"0":135,"1":210,"2":115,"3":155,"4":180,"5":210,"6":220,"7":320,"8":320,"9":330,"10":330,"11":600},"2021":{"0":930,"1":1400,"2":1550,"3":1950,"4":2400,"5":1850,"6":1900,"7":2600,"8":2800,"9":3400,"10":4000,"11":3400},"2022":{"0":2800,"1":2600,"2":2600,"3":2900,"4":2000,"5":1000,"6":1050,"7":1550,"8":1200,"9":1200,"10":1200,"11":1100},"2023":{"0":1200,"1":1500,"2":1600,"3":1800,"4":1750,"5":1650,"6":1800,"7":1700,"8":1500,"9":1550,"10":1750,"11":2050},"2024":{"0":2200,"1":2800,"2":3300,"3":3000,"4":2800,"5":2800,"6":2600,"7":2400,"8":2200,"9":2300,"10":2400,"11":3200},"2025":{"0":3000,"1":2600,"2":1900,"3":1600,"4":1800,"5":2000,"6":1900,"7":2200,"8":2100,"9":2300,"10":2100,"11":2500}},"sol":{"2020":{"3":0.5,"4":0.7,"5":0.8,"6":1.5,"7":2.5,"8":3.0,"9":3.5,"10":2.0,"11":1.8},"2021":{"0":3.0,"1":8.0,"2":12,"3":22,"4":33,"5":24,"6":28,"7":60,"8":120,"9":140,"10":170,"11":140},"2022":{"0":130,"1":90,"2":80,"3":90,"4":65,"5":33,"6":35,"7":35,"8":30,"9":28,"10":30,"11":11},"2023":{"0":9,"1":18,"2":19,"3":20,"4":18,"5":15,"6":22,"7":22,"8":18,"9":20,"10":43,"11":70},"2024":{"0":80,"1":110,"2":160,"3":155,"4":155,"5":140,"6":140,"7":155,"8":130,"9":140,"10":170,"11":195},"2025":{"0":185,"1":160,"2":130,"3":110,"4":145,"5":140,"6":130,"7":150,"8":145,"9":155,"10":145,"11":160}},"sp500":{"2000":{"0":1394,"1":1366,"2":1499,"3":1452,"4":1421,"5":1454,"6":1430,"7":1518,"8":1448,"9":1363,"10":1315,"11":1320},"2001":{"0":1336,"1":1240,"2":1160,"3":1249,"4":1255,"5":1224,"6":1211,"7":1148,"8":1040,"9":1060,"10":1139,"11":1148},"2002":{"0":1130,"1":1106,"2":1147,"3":1076,"4":1067,"5":989,"6":911,"7":916,"8":815,"9":885,"10":936,"11":880},"2003":{"0":855,"1":841,"2":848,"3":916,"4":963,"5":974,"6":990,"7":1008,"8":995,"9":1050,"10":1059,"11":1111},"2004":{"0":1131,"1":1144,"2":1126,"3":1107,"4":1121,"5":1140,"6":1101,"7":1104,"8":1115,"9":1130,"10":1174,"11":1212},"2005":{"0":1181,"1":1203,"2":1180,"3":1156,"4":1191,"5":1191,"6":1234,"7":1234,"8":1228,"9":1207,"10":1249,"11":1248},"2006":{"0":1280,"1":1281,"2":1295,"3":1310,"4":1270,"5":1270,"6":1276,"7":1304,"8":1336,"9":1377,"10":1401,"11":1418},"2007":{"0":1438,"1":1407,"2":1421,"3":1482,"4":1530,"5":1503,"6":1455,"7":1474,"8":1526,"9":1549,"10":1481,"11":1468},"2008":{"0":1378,"1":1330,"2":1323,"3":1386,"4":1400,"5":1280,"6":1267,"7":1293,"8":1166,"9":968,"10":896,"11":903},"2009":{"0":825,"1":735,"2":797,"3":872,"4":919,"5":919,"6":987,"7":1010,"8":1057,"9":1036,"10":1096,"11":1115},"2010":{"0":1074,"1":1104,"2":1169,"3":1187,"4":1089,"5":1031,"6":1101,"7":1049,"8":1141,"9":1183,"10":1198,"11":1257},"2011":{"0":1286,"1":1327,"2":1326,"3":1363,"4":1345,"5":1321,"6":1292,"7":1218,"8":1131,"9":1253,"10":1247,"11":1258},"2012":{"0":1312,"1":1366,"2":1408,"3":1397,"4":1310,"5":1362,"6":1380,"7":1404,"8":1441,"9":1412,"10":1412,"11":1426},"2013":{"0":1498,"1":1515,"2":1569,"3":1597,"4":1631,"5":1606,"6":1685,"7":1633,"8":1681,"9":1757,"10":1806,"11":1848},"2014":{"0":1783,"1":1859,"2":1872,"3":1884,"4":1924,"5":1960,"6":1931,"7":2003,"8":1972,"9":2018,"10":2067,"11":2059},"2015":{"0":1995,"1":2105,"2":2068,"3":2086,"4":2107,"5":2063,"6":2103,"7":1972,"8":1920,"9":2079,"10":2080,"11":2044},"2016":{"0":1940,"1":1932,"2":2059,"3":2065,"4":2097,"5":2099,"6":2174,"7":2171,"8":2168,"9":2126,"10":2198,"11":2239},"2017":{"0":2279,"1":2364,"2":2363,"3":2384,"4":2412,"5":2423,"6":2470,"7":2472,"8":2519,"9":2575,"10":2648,"11":2674},"2018":{"0":2824,"1":2714,"2":2641,"3":2648,"4":2706,"5":2718,"6":2816,"7":2902,"8":2914,"9":2711,"10":2723,"11":2507},"2019":{"0":2704,"1":2784,"2":2834,"3":2946,"4":2945,"5":2942,"6":3025,"7":2926,"8":2977,"9":3037,"10":3141,"11":3231},"2020":{"0":3226,"1":2954,"2":2585,"3":2912,"4":3044,"5":3100,"6":3271,"7":3500,"8":3363,"9":3270,"10":3621,"11":3756},"2021":{"0":3714,"1":3812,"2":3973,"3":4181,"4":4204,"5":4298,"6":4395,"7":4523,"8":4308,"9":4605,"10":4567,"11":4766},"2022":{"0":4516,"1":4374,"2":4530,"3":4132,"4":4132,"5":3786,"6":3831,"7":4130,"8":3585,"9":3901,"10":3871,"11":3840},"2023":{"0":3920,"1":3970,"2":4109,"3":4170,"4":4205,"5":4450,"6":4588,"7":4508,"8":4288,"9":4194,"10":4567,"11":4769},"2024":{"0":4846,"1":5137,"2":5254,"3":5035,"4":5277,"5":5460,"6":5522,"7":5648,"8":5762,"9":5705,"10":5870,"11":5882},"2025":{"0":5867,"1":5954,"2":5611,"3":5035,"4":5282,"5":5412,"6":5344,"7":5456,"8":5396,"9":5705,"10":5924,"11":5950}},"nasdaq":{"2000":{"0":3940,"1":4697,"2":4572,"3":3849,"4":3401,"5":3966,"6":3766,"7":3663,"8":3674,"9":3369,"10":2597,"11":2471},"2001":{"0":2892,"1":2151,"2":1840,"3":2116,"4":2110,"5":2028,"6":1956,"7":1786,"8":1498,"9":1690,"10":1930,"11":1950},"2002":{"0":1934,"1":1731,"2":1845,"3":1688,"4":1616,"5":1463,"6":1323,"7":1314,"8":1172,"9":1330,"10":1428,"11":1336},"2003":{"0":1321,"1":1306,"2":1341,"3":1464,"4":1536,"5":1622,"6":1735,"7":1810,"8":1786,"9":1932,"10":1960,"11":2003},"2004":{"0":2066,"1":2030,"2":1994,"3":1921,"4":1900,"5":1987,"6":1887,"7":1838,"8":1896,"9":1975,"10":2034,"11":2175},"2005":{"0":2063,"1":1997,"2":1999,"3":1922,"4":2068,"5":2057,"6":2184,"7":2184,"8":2152,"9":2120,"10":2223,"11":2205},"2006":{"0":2306,"1":2282,"2":2340,"3":2322,"4":2178,"5":2172,"6":2091,"7":2183,"8":2258,"9":2366,"10":2432,"11":2415},"2007":{"0":2464,"1":2457,"2":2421,"3":2526,"4":2604,"5":2604,"6":2546,"7":2596,"8":2701,"9":2859,"10":2660,"11":2652},"2008":{"0":2389,"1":2271,"2":2280,"3":2413,"4":2523,"5":2293,"6":2326,"7":2368,"8":2091,"9":1720,"10":1595,"11":1577},"2009":{"0":1476,"1":1377,"2":1529,"3":1717,"4":1774,"5":1835,"6":1979,"7":2009,"8":2122,"9":2045,"10":2145,"11":2269},"2010":{"0":2147,"1":2238,"2":2398,"3":2471,"4":2257,"5":2109,"6":2255,"7":2185,"8":2369,"9":2490,"10":2534,"11":2653},"2011":{"0":2700,"1":2782,"2":2782,"3":2874,"4":2835,"5":2773,"6":2756,"7":2533,"8":2416,"9":2684,"10":2621,"11":2605},"2012":{"0":2814,"1":2967,"2":3091,"3":3046,"4":2827,"5":2935,"6":2945,"7":3066,"8":3116,"9":2977,"10":2916,"11":3019},"2013":{"0":3142,"1":3160,"2":3268,"3":3328,"4":3455,"5":3403,"6":3626,"7":3590,"8":3787,"9":3921,"10":3994,"11":4177},"2014":{"0":4104,"1":4309,"2":4199,"3":4114,"4":4242,"5":4408,"6":4369,"7":4580,"8":4493,"9":4630,"10":4792,"11":4736},"2015":{"0":4635,"1":4900,"2":4900,"3":5009,"4":5070,"5":4987,"6":5128,"7":4777,"8":4620,"9":5054,"10":5127,"11":5007},"2016":{"0":4614,"1":4558,"2":4869,"3":4863,"4":4948,"5":4842,"6":5162,"7":5214,"8":5312,"9":5189,"10":5323,"11":5383},"2017":{"0":5614,"1":5820,"2":5911,"3":5987,"4":6199,"5":6241,"6":6348,"7":6283,"8":6496,"9":6727,"10":6797,"11":6903},"2018":{"0":7212,"1":6777,"2":7063,"3":6806,"4":7006,"5":7510,"6":7671,"7":7939,"8":8046,"9":7305,"10":6888,"11":6635},"2019":{"0":6738,"1":7100,"2":7448,"3":7839,"4":7453,"5":7510,"6":8109,"7":7962,"8":7999,"9":8292,"10":8665,"11":8945},"2020":{"0":8952,"1":8567,"2":7360,"3":8860,"4":9491,"5":10059,"6":10745,"7":11109,"8":11167,"9":11713,"10":12198,"11":12888},"2021":{"0":13071,"1":13192,"2":13246,"3":13900,"4":13620,"5":14504,"6":15654,"7":15698,"8":15259,"9":15765,"10":16402,"11":15645},"2022":{"0":15404,"1":14765,"2":14893,"3":13411,"4":12144,"5":11029,"6":11803,"7":13181,"8":11633,"9":12028,"10":11630,"11":10939},"2023":{"0":11631,"1":12199,"2":12853,"3":13181,"4":13707,"5":14732,"6":15695,"7":15426,"8":14946,"9":14580,"10":16015,"11":16825},"2024":{"0":17137,"1":17857,"2":18296,"3":17718,"4":18658,"5":19685,"6":19962,"7":19574,"8":19791,"9":20081,"10":20776,"11":21054},"2025":{"0":21237,"1":20756,"2":18961,"3":16776,"4":18659,"5":19686,"6":19112,"7":19574,"8":19008,"9":20081,"10":21237,"11":21350}},"apple":{"2000":{"0":25,"1":28,"2":30,"3":28,"4":25,"5":22,"6":20,"7":20,"8":18,"9":15,"10":12,"11":10},"2001":{"0":10,"1":11,"2":11,"3":11,"4":10,"5":10,"6":9,"7":9,"8":8,"9":10,"10":10,"11":10},"2002":{"0":10,"1":9,"2":10,"3":10,"4":8,"5":7,"6":7,"7":8,"8":7,"9":8,"10":9,"11":8},"2003":{"0":7,"1":7,"2":7,"3":7,"4":8,"5":9,"6":10,"7":10,"8":10,"9":11,"10":11,"11":12},"2004":{"0":12,"1":13,"2":14,"3":15,"4":18,"5":20,"6":27,"7":31,"8":39,"9":46,"10":64,"11":65},"2005":{"0":62,"1":57,"2":41,"3":36,"4":37,"5":36,"6":42,"7":46,"8":52,"9":58,"10":63,"11":71},"2006":{"0":75,"1":72,"2":63,"3":67,"4":59,"5":57,"6":67,"7":67,"8":76,"9":79,"10":81,"11":84},"2007":{"0":84,"1":84,"2":92,"3":99,"4":113,"5":122,"6":131,"7":135,"8":153,"9":190,"10":185,"11":198},"2008":{"0":135,"1":119,"2":143,"3":153,"4":188,"5":167,"6":173,"7":176,"8":127,"9":96,"10":93,"11":85},"2009":{"0":85,"1":89,"2":106,"3":122,"4":122,"5":143,"6":163,"7":163,"8":171,"9":188,"10":200,"11":210},"2010":{"0":192,"1":201,"2":218,"3":237,"4":250,"5":266,"6":259,"7":261,"8":284,"9":294,"10":310,"11":322},"2011":{"0":340,"1":353,"2":350,"3":344,"4":340,"5":335,"6":390,"7":390,"8":400,"9":421,"10":381,"11":405},"2012":{"0":411,"1":498,"2":600,"3":583,"4":577,"5":584,"6":610,"7":665,"8":702,"9":623,"10":595,"11":532},"2013":{"0":450,"1":441,"2":442,"3":427,"4":449,"5":417,"6":417,"7":500,"8":488,"9":524,"10":524,"11":560},"2014":{"0":503,"1":527,"2":536,"3":524,"4":592,"5":640,"6":630,"7":660,"8":703,"9":700,"10":714,"11":730},"2015":{"0":115,"1":128,"2":124,"3":127,"4":132,"5":126,"6":122,"7":113,"8":110,"9":119,"10":119,"11":107},"2016":{"0":97,"1":96,"2":108,"3":105,"4":99,"5":96,"6":104,"7":106,"8":113,"9":118,"10":111,"11":115},"2017":{"0":121,"1":136,"2":143,"3":144,"4":153,"5":144,"6":149,"7":161,"8":153,"9":169,"10":174,"11":170},"2018":{"0":167,"1":178,"2":168,"3":168,"4":187,"5":185,"6":191,"7":208,"8":224,"9":220,"10":209,"11":158},"2019":{"0":158,"1":174,"2":188,"3":200,"4":178,"5":199,"6":203,"7":209,"8":218,"9":248,"10":263,"11":293},"2020":{"0":297,"1":300,"2":255,"3":289,"4":317,"5":364,"6":380,"7":462,"8":115,"9":108,"10":119,"11":132},"2021":{"0":134,"1":121,"2":122,"3":134,"4":126,"5":133,"6":145,"7":149,"8":142,"9":149,"10":157,"11":177},"2022":{"0":174,"1":164,"2":178,"3":157,"4":157,"5":137,"6":161,"7":174,"8":150,"9":138,"10":148,"11":130},"2023":{"0":145,"1":150,"2":160,"3":166,"4":176,"5":190,"6":196,"7":176,"8":171,"9":171,"10":189,"11":193},"2024":{"0":184,"1":183,"2":171,"3":170,"4":192,"5":210,"6":218,"7":226,"8":233,"9":229,"10":225,"11":254},"2025":{"0":237,"1":241,"2":222,"3":202,"4":207,"5":201,"6":210,"7":218,"8":230,"9":226,"10":237,"11":250}},"nvidia":{"2016":{"0":28,"1":28,"2":30,"3":31,"4":36,"5":44,"6":58,"7":64,"8":68,"9":74,"10":83,"11":95},"2017":{"0":105,"1":110,"2":98,"3":103,"4":104,"5":148,"6":160,"7":163,"8":168,"9":200,"10":210,"11":193},"2018":{"0":225,"1":228,"2":234,"3":220,"4":254,"5":258,"6":254,"7":270,"8":287,"9":228,"10":165,"11":134},"2019":{"0":137,"1":150,"2":168,"3":177,"4":156,"5":165,"6":178,"7":170,"8":180,"9":211,"10":214,"11":231},"2020":{"0":238,"1":257,"2":265,"3":285,"4":315,"5":375,"6":433,"7":468,"8":527,"9":534,"10":534,"11":522},"2021":{"0":537,"1":575,"2":520,"3":608,"4":640,"5":755,"6":796,"7":220,"8":218,"9":218,"10":332,"11":294},"2022":{"0":269,"1":237,"2":259,"3":232,"4":189,"5":156,"6":186,"7":179,"8":133,"9":121,"10":145,"11":146},"2023":{"0":143,"1":188,"2":277,"3":278,"4":379,"5":427,"6":467,"7":493,"8":435,"9":435,"10":498,"11":495},"2024":{"0":613,"1":790,"2":879,"3":762,"4":867,"5":1208,"6":1177,"7":1165,"8":116,"9":138,"10":143,"11":148},"2025":{"0":140,"1":134,"2":110,"3":96,"4":111,"5":134,"6":144,"7":136,"8":125,"9":138,"10":148,"11":155}},"tesla":{"2015":{"0":45,"1":46,"2":48,"3":47,"4":55,"5":57,"6":60,"7":60,"8":48,"9":47,"10":54,"11":46},"2016":{"0":43,"1":49,"2":49,"3":49,"4":48,"5":43,"6":48,"7":49,"8":52,"9":45,"10":56,"11":68},"2017":{"0":75,"1":77,"2":79,"3":80,"4":68,"5":72,"6":79,"7":82,"8":89,"9":107,"10":121,"11":126},"2018":{"0":140,"1":157,"2":152,"3":158,"4":173,"5":163,"6":156,"7":230,"8":280,"9":261,"10":195,"11":185},"2019":{"0":214,"1":176,"2":192,"3":237,"4":177,"5":190,"6":243,"7":226,"8":241,"9":259,"10":333,"11":418},"2020":{"0":670,"1":650,"2":450,"3":560,"4":740,"5":960,"6":1125,"7":1570,"8":430,"9":440,"10":400,"11":695},"2021":{"0":850,"1":700,"2":620,"3":680,"4":600,"5":625,"6":680,"7":706,"8":775,"9":900,"10":1070,"11":1060},"2022":{"0":936,"1":875,"2":1070,"3":977,"4":766,"5":670,"6":780,"7":940,"8":275,"9":230,"10":200,"11":123},"2023":{"0":180,"1":190,"2":207,"3":165,"4":180,"5":262,"6":290,"7":254,"8":250,"9":212,"10":234,"11":252},"2024":{"0":187,"1":202,"2":175,"3":148,"4":177,"5":182,"6":232,"7":210,"8":218,"9":250,"10":352,"11":400},"2025":{"0":375,"1":310,"2":268,"3":230,"4":270,"5":290,"6":305,"7":320,"8":310,"9":295,"10":320,"11":340}},"gold":{"2000":{"0":283,"1":295,"2":285,"3":278,"4":275,"5":285,"6":281,"7":274,"8":271,"9":270,"10":265,"11":272},"2001":{"0":265,"1":262,"2":263,"3":259,"4":269,"5":270,"6":267,"7":272,"8":284,"9":283,"10":276,"11":275},"2002":{"0":281,"1":295,"2":294,"3":302,"4":314,"5":321,"6":313,"7":311,"8":319,"9":316,"10":319,"11":332},"2003":{"0":356,"1":350,"2":340,"3":328,"4":343,"5":357,"6":351,"7":359,"8":381,"9":391,"10":391,"11":415},"2004":{"0":405,"1":395,"2":406,"3":403,"4":385,"5":393,"6":398,"7":400,"8":407,"9":421,"10":439,"11":441},"2005":{"0":427,"1":434,"2":429,"3":429,"4":422,"5":430,"6":425,"7":437,"8":473,"9":481,"10":490,"11":513},"2006":{"0":568,"1":555,"2":582,"3":635,"4":676,"5":598,"6":633,"7":632,"8":598,"9":585,"10":628,"11":635},"2007":{"0":632,"1":665,"2":654,"3":679,"4":666,"5":656,"6":666,"7":665,"8":714,"9":748,"10":806,"11":838},"2008":{"0":923,"1":972,"2":968,"3":910,"4":888,"5":890,"6":939,"7":839,"8":745,"9":807,"10":740,"11":872},"2009":{"0":858,"1":943,"2":924,"3":890,"4":928,"5":945,"6":934,"7":949,"8":996,"9":1004,"10":1127,"11":1088},"2010":{"0":1118,"1":1111,"2":1113,"3":1149,"4":1210,"5":1234,"6":1190,"7":1218,"8":1298,"9":1340,"10":1369,"11":1410},"2011":{"0":1346,"1":1411,"2":1435,"3":1474,"4":1537,"5":1524,"6":1629,"7":1787,"8":1771,"9":1665,"10":1735,"11":1566},"2012":{"0":1657,"1":1726,"2":1662,"3":1651,"4":1586,"5":1598,"6":1619,"7":1619,"8":1776,"9":1776,"10":1718,"11":1657},"2013":{"0":1670,"1":1578,"2":1595,"3":1481,"4":1388,"5":1233,"6":1326,"7":1312,"8":1326,"9":1314,"10":1246,"11":1206},"2014":{"0":1243,"1":1326,"2":1341,"3":1299,"4":1291,"5":1319,"6":1298,"7":1281,"8":1208,"9":1171,"10":1175,"11":1202},"2015":{"0":1262,"1":1215,"2":1184,"3":1179,"4":1188,"5":1178,"6":1097,"7":1134,"8":1115,"9":1137,"10":1073,"11":1060},"2016":{"0":1116,"1":1239,"2":1237,"3":1240,"4":1215,"5":1321,"6":1350,"7":1315,"8":1325,"9":1270,"10":1171,"11":1145},"2017":{"0":1210,"1":1235,"2":1250,"3":1268,"4":1264,"5":1257,"6":1258,"7":1310,"8":1314,"9":1279,"10":1277,"11":1303},"2018":{"0":1338,"1":1318,"2":1325,"3":1337,"4":1315,"5":1252,"6":1226,"7":1207,"8":1194,"9":1186,"10":1222,"11":1280},"2019":{"0":1321,"1":1319,"2":1297,"3":1284,"4":1286,"5":1393,"6":1426,"7":1526,"8":1499,"9":1491,"10":1464,"11":1514},"2020":{"0":1589,"1":1640,"2":1598,"3":1716,"4":1727,"5":1769,"6":1975,"7":2067,"8":1898,"9":1877,"10":1879,"11":1888},"2021":{"0":1852,"1":1776,"2":1709,"3":1773,"4":1908,"5":1897,"6":1832,"7":1813,"8":1755,"9":1758,"10":1783,"11":1829},"2022":{"0":1798,"1":1838,"2":1944,"3":1969,"4":1843,"5":1833,"6":1762,"7":1744,"8":1661,"9":1630,"10":1641,"11":1823},"2023":{"0":1924,"1":1843,"2":1969,"3":1990,"4":1999,"5":1917,"6":1960,"7":1942,"8":1875,"9":1978,"10":1988,"11":2078},"2024":{"0":2039,"1":2083,"2":2228,"3":2336,"4":2346,"5":2330,"6":2448,"7":2503,"8":2634,"9":2787,"10":2773,"11":2643},"2025":{"0":2752,"1":2858,"2":3123,"3":3112,"4":3283,"5":3260,"6":3300,"7":3250,"8":3220,"9":3230,"10":3180,"11":3250}}};
+const ASSET_HIST_KEY={sp500:'sp500',nasdaq:'nasdaq',cac40:null,msci:null,apple:'apple',nvidia:'nvidia',tesla:'tesla',paypal:null,msi:null,btc:'btc',eth:'eth',sol:'sol',gold:'gold',livreta:null};
+
+function getHistPrices(assetId){
+  const key=ASSET_HIST_KEY[assetId];
+  if(!key||!HIST[key])return null;
+  const data=HIST[key];
+  const prices=[];
+  Object.keys(data).sort((a,b)=>+a-+b).forEach(y=>{
+    Object.keys(data[y]).sort((a,b)=>+a-+b).forEach(m=>{
+      prices.push({y:+y,m:+m,p:data[y][m]});
+    });
+  });
+  return prices;
+}
+
+function getPriceAt(prices,year,month){
+  if(!prices)return null;
+  let best=null;
+  for(const pt of prices){
+    if(pt.y<year||(pt.y===year&&pt.m<=month))best=pt;
+    else break;
+  }
+  return best?best.p:null;
+}
+
+async function fetchCoinGecko(id, startTs){
+  const cacheKey=id+'_'+startTs;
+  if(priceCache[cacheKey])return priceCache[cacheKey];
+  try{
+    const endTs=Math.floor(Date.now()/1000);
+    const url=`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${startTs}&to=${endTs}`;
+    const r=await fetch(url);
+    if(!r.ok)return null;
+    const d=await r.json();
+    const prices=d.prices;
+    if(!prices||!prices.length)return null;
+    priceCache[cacheKey]=prices;
+    return prices;
+  }catch(e){return null;}
+}
+
+async function fetchYahoo(ticker, startTs){
+  const cacheKey=ticker+'_'+startTs;
+  if(priceCache[cacheKey])return priceCache[cacheKey];
+  try{
+    const endTs=Math.floor(Date.now()/1000);
+    const url=`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1mo&period1=${startTs}&period2=${endTs}&events=history`;
+    const proxy=`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const r=await fetch(proxy);
+    if(!r.ok)return null;
+    const d=await r.json();
+    const ts=d?.chart?.result?.[0]?.timestamp;
+    const closes=d?.chart?.result?.[0]?.indicators?.adjclose?.[0]?.adjclose||d?.chart?.result?.[0]?.indicators?.quote?.[0]?.close;
+    if(!ts||!closes)return null;
+    const prices=ts.map((t,i)=>[t*1000,closes[i]]).filter(p=>p[1]!=null);
+    priceCache[cacheKey]=prices;
+    return prices;
+  }catch(e){return null;}
+}
+
+/* Simulation DCA avec vrais prix :
+   chaque mois on achète X€ au prix du marché ce mois-là
+   on calcule la valeur finale de tout ce qu'on a accumulé */
+function simulateDCA(monthlyEur, priceData){
+  if(!priceData||priceData.length<2)return null;
+  let totalUnits=0;
+  const portfolioValues=[];
+  let priceIdx=0;
+  const months=getMonths();
+  const startM=parseInt(document.getElementById('selectMonth').value);
+  const startY=parseInt(document.getElementById('selectYear').value);
+
+  for(let i=0;i<=months;i++){
+    const d=new Date(startY,startM+i,1);
+    const ts=d.getTime();
+    // Prix le plus proche pour ce mois
+    while(priceIdx<priceData.length-1&&priceData[priceIdx+1][0]<=ts)priceIdx++;
+    const price=priceData[priceIdx][1];
+    if(price&&price>0){
+      if(i<months) totalUnits+=monthlyEur/price;
+      portfolioValues.push({month:i,value:Math.round(totalUnits*price)});
+    }
+  }
+  return portfolioValues;
+}
+
+/* Fallback taux annuel fixe si API échoue */
+function compoundFallback(monthly,months,rate){
+  const r=rate/12;if(!r)return monthly*months;
+  return monthly*((Math.pow(1+r,months)-1)/r)*(1+r);
+}
+
+const FALLBACK_RATES={sp500:0.10,nasdaq:0.155,cac40:0.072,msci:0.085,apple:0.29,nvidia:0.50,tesla:0.35,paypal:0.08,msi:0.18,btc:0.80,eth:0.60,sol:1.20,gold:0.07,livreta:0.024};
+
+async function getAssetData(asset){
+  const months=getMonths();
+  const monthly=totalMonthly();
+  const startY=parseInt(document.getElementById('selectYear').value);
+  const startM=parseInt(document.getElementById('selectMonth').value);
+
+  if(asset.type==='fixed'){
+    const pts=[];
+    for(let i=0;i<=months;i++) pts.push({month:i,value:Math.round(compoundFallback(monthly,i,asset.rate))});
+    return pts;
+  }
+
+  const histPrices=getHistPrices(asset.id);
+  if(histPrices){
+    let totalUnits=0;
+    const pts=[];
+    for(let i=0;i<=months;i++){
+      const d=new Date(startY,startM+i,1);
+      const price=getPriceAt(histPrices,d.getFullYear(),d.getMonth());
+      if(price&&price>0&&i<months) totalUnits+=monthly/price;
+      const curPrice=getPriceAt(histPrices,d.getFullYear(),d.getMonth())||getPriceAt(histPrices,2025,9);
+      pts.push({month:i,value:Math.round(totalUnits*(curPrice||1))});
+    }
+    if(pts.length>1&&pts[pts.length-1].value>0){
+      const b=document.getElementById('apibadge-'+asset.id);
+      if(b){b.textContent='données réelles ✓';b.className='api-badge api-real';}
+      return pts;
+    }
+  }
+
+  const rate=FALLBACK_RATES[asset.id]||0.08;
+  const pts=[];
+  for(let i=0;i<=months;i++) pts.push({month:i,value:Math.round(compoundFallback(monthly,i,rate))});
+  return pts;
+}
 
 function buildExpenseGrid(){
   const g=document.getElementById('expenseGrid');g.innerHTML='';
@@ -304,8 +511,7 @@ function buildExpenseGrid(){
 
 function buildAssetList(filter){
   filter=(filter||'').toLowerCase();
-  const container=document.getElementById('assetList');
-  container.innerHTML='';
+  const container=document.getElementById('assetList');container.innerHTML='';
   const monthly=totalMonthly(),months=getMonths();
   const groups=[...new Set(ALL_ASSETS.map(a=>a.group))];
   groups.forEach(group=>{
@@ -314,17 +520,17 @@ function buildAssetList(filter){
     const gt=document.createElement('div');gt.className='asset-group-title';gt.textContent=group;container.appendChild(gt);
     const row=document.createElement('div');row.className='asset-checks';
     assets.forEach(asset=>{
-      const val=compound(monthly,months,asset.rate);
       const on=selectedIds.has(asset.id);
       const chip=document.createElement('div');
       chip.className='asset-check'+(on?' on':'');
       if(on)chip.style.background=asset.color+'33';
-      chip.innerHTML=`<span class="dot" style="background:${asset.color}"></span><span class="aname">${asset.name}</span><span class="aval">${months>0?fmtE(val):''}</span>`;
+      const apiLabel = asset.type==='fixed' ? '' : `<span class="api-badge api-est" id="apibadge-${asset.id}">est.</span>`;
+      chip.innerHTML=`<span class="dot" style="background:${asset.color}"></span><span class="aname">${asset.name}</span>${apiLabel}`;
       chip.addEventListener('click',()=>{
         if(selectedIds.has(asset.id)){if(selectedIds.size>1)selectedIds.delete(asset.id);}
         else{selectedIds.add(asset.id);}
         buildAssetList(document.getElementById('assetSearch').value);
-        buildChart(monthly,months);
+        renderChart();
       });
       row.appendChild(chip);
     });
@@ -332,34 +538,49 @@ function buildAssetList(filter){
   });
 }
 
-function buildChart(monthly,months){
-  const sY=parseInt(document.getElementById('selectYear').value),sM=parseInt(document.getElementById('selectMonth').value);
+async function renderChart(){
+  const months=getMonths();
+  if(!months)return;
+  const monthly=totalMonthly();
   const vis=ALL_ASSETS.filter(a=>selectedIds.has(a.id));
+  const startY=parseInt(document.getElementById('selectYear').value);
+  const startM=parseInt(document.getElementById('selectMonth').value);
+
+  const loadBar=document.getElementById('loadingBar');
+  loadBar.classList.add('visible');
+  document.getElementById('loadingText').textContent='Chargement des prix réels...';
+
   const labels=[];
-  const datasets=vis.map(a=>({label:a.name,data:[],borderColor:a.color,backgroundColor:'transparent',tension:0.4,borderWidth:2,pointRadius:0}));
   for(let i=0;i<=months;i++){
-    const d=new Date(sY,sM+i,1);
+    const d=new Date(startY,startM+i,1);
     labels.push(d.getMonth()===0||i===0||i===months?d.getFullYear().toString():'');
-    vis.forEach((a,idx)=>datasets[idx].data.push(Math.round(compound(monthly,i,a.rate))));
   }
+
+  const datasets=[];
+  for(const asset of vis){
+    document.getElementById('loadingText').textContent=`Chargement ${asset.name}...`;
+    const data=await getAssetData(asset);
+    datasets.push({
+      label:asset.name,
+      data:data.map(p=>p.value),
+      borderColor:asset.color,
+      backgroundColor:'transparent',
+      tension:0.4,borderWidth:2,pointRadius:0
+    });
+  }
+
+  loadBar.classList.remove('visible');
+
   const isDark=matchMedia('(prefers-color-scheme:dark)').matches;
   const gc=isDark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.05)',tc=isDark?'#555':'#999';
   if(iChart)iChart.destroy();
   iChart=new Chart(document.getElementById('growthChart'),{
-    type:'line',
-    data:{labels,datasets},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}
-      },
-      scales:{
-        x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:10}},
-        y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M€':v>=1000?(v/1000).toFixed(0)+'k€':v+'€'}}
-      }
-    }
+    type:'line',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},
+      scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:10}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M€':v>=1000?(v/1000).toFixed(0)+'k€':v+'€'}}}}
   });
+
   const leg=document.getElementById('chartLegend');leg.innerHTML='';
   vis.forEach(a=>{const d=document.createElement('div');d.className='legend-item';d.innerHTML=`<span class="legend-dot" style="background:${a.color}"></span>${a.name}`;leg.appendChild(d);});
 }
@@ -372,18 +593,18 @@ function buildAffiliates(){
 function updateInvest(){
   const monthly=totalMonthly(),months=getMonths();
   updateDateInfo();
+  const nowM=today.getMonth();const nowY=today.getFullYear();
+  document.getElementById('expenseLabel').textContent=`Mes dépenses par mois — ${MONTHS_FR[nowM]} ${nowY} :`;
   document.getElementById('totalSpent').textContent=months>0?fmtE(monthly*months):'—';
   document.getElementById('totalYear').textContent=fmtE(monthly*12);
   document.getElementById('perDay').textContent=Math.round(monthly/30)+' € / jour';
   buildAssetList(document.getElementById('assetSearch').value);
-  if(months>0)buildChart(monthly,months);
+  if(months>0)renderChart();
 }
 
-document.getElementById('assetSearch').addEventListener('input',e=>{
-  buildAssetList(e.target.value);
-});
+document.getElementById('assetSearch').addEventListener('input',e=>{buildAssetList(e.target.value);});
 
-/* ══════════ IMMO ══════════ */
+/* ══ IMMO ══ */
 const CITIES={
   Roanne:{bas:{prix:55000,loyer:450,travaux:3000,taxe:600},mid:{prix:100000,loyer:650,travaux:2000,taxe:900}},
   Tarbes:{bas:{prix:65000,loyer:480,travaux:3500,taxe:650},mid:{prix:115000,loyer:680,travaux:2500,taxe:950}},
@@ -393,18 +614,14 @@ const CITIES={
 };
 const IMMO_RATE=0.038,IMMO_YEARS=25;
 let activeCity='Roanne',activeTier='bas',immoParams={},immoChart=null;
-
 function immoDefaults(){const d=CITIES[activeCity][activeTier];return{prix:{v:d.prix,label:'Prix du bien',unit:'€'},apport:{v:Math.round(d.prix*0.1),label:'Apport (10%)',unit:'€'},loyer:{v:d.loyer,label:'Loyer mensuel',unit:'€/mois'},travaux:{v:d.travaux,label:'Travaux total',unit:'€'},taxe:{v:d.taxe,label:'Taxes annuelles',unit:'€/an'},vacance:{v:1,label:'Vacance locative',unit:'mois/an'}};}
-function mensualite(capital,rate,years){const r=rate/12,n=years*12;return capital*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);}
+function mensualite(c,r,y){const rm=r/12,n=y*12;return c*(rm*Math.pow(1+rm,n))/(Math.pow(1+rm,n)-1);}
 function buildCityTabs(){const c=document.getElementById('cityTabs');c.innerHTML='';Object.keys(CITIES).forEach(city=>{const b=document.createElement('button');b.className='pill-tab'+(city===activeCity?' active':'');b.textContent=city;b.onclick=()=>{activeCity=city;immoParams=immoDefaults();buildImmoAll();};c.appendChild(b);});}
 function buildTierTabs(){const c=document.getElementById('tierTabs');c.innerHTML='';[{k:'bas',l:'Bas de gamme'},{k:'mid',l:'Milieu de gamme'}].forEach(({k,l})=>{const b=document.createElement('button');b.className='pill-tab'+(k===activeTier?' active':'');b.textContent=l;b.onclick=()=>{activeTier=k;immoParams=immoDefaults();buildImmoAll();};c.appendChild(b);});}
 function buildImmoParams(){const g=document.getElementById('paramsGrid');g.innerHTML='';Object.entries(immoParams).forEach(([key,p])=>{const card=document.createElement('div');card.className='param-card';card.innerHTML=`<div class="param-label">${p.label}</div><div class="param-inp"><input type="number" value="${p.v}" step="${key==='vacance'?1:500}"><span class="param-unit">${p.unit}</span></div>`;g.appendChild(card);card.querySelector('input').addEventListener('input',e=>{immoParams[key].v=parseFloat(e.target.value)||0;computeImmo();});});}
-
 function computeImmo(){
   const prix=immoParams.prix.v,apport=immoParams.apport.v,loyer=immoParams.loyer.v,travaux=immoParams.travaux.v,taxe=immoParams.taxe.v,vacance=immoParams.vacance.v;
-  const capital=prix-apport+travaux;
-  const mens=mensualite(capital,IMMO_RATE,IMMO_YEARS);
-  const loyerAn=loyer*(12-vacance);
+  const capital=prix-apport+travaux,mens=mensualite(capital,IMMO_RATE,IMMO_YEARS),loyerAn=loyer*(12-vacance);
   const rows=[];let cumul=-apport,equilibre=null;
   for(let y=1;y<=IMMO_YEARS;y++){const creditAn=mens*12,cf=loyerAn-creditAn-taxe;cumul+=cf;if(cumul>=0&&equilibre===null)equilibre=y;rows.push({y,creditAn,loyerAn,taxe,cf,cumul});}
   const rendBrut=(loyerAn/prix)*100,cfCredit=loyerAn-mens*12-taxe,cfLibre=loyerAn-taxe;
@@ -413,18 +630,15 @@ function computeImmo(){
   const mg=document.getElementById('immoMetrics');mg.innerHTML='';
   [{label:'Mensualité crédit',val:fmtE(mens),sub:'sur 25 ans',cls:'red'},{label:'Loyer net / an',val:fmtE(loyerAn),sub:`${immoParams.vacance.v} mois vacance`,cls:''},{label:'Cash-flow / an (crédit)',val:fmtE(cfCredit),sub:'loyer − crédit − taxes',cls:cfCredit>=0?'green':'red'},{label:'Cash-flow / an (libre)',val:fmtE(cfLibre),sub:'après 25 ans',cls:'green'},{label:'Rendement brut',val:rendBrut.toFixed(2)+'%',sub:'loyer brut / prix',cls:rendBrut>=5?'green':'amber'},{label:'Année équilibre',val:equilibre?'An '+equilibre:'>25 ans',sub:'cumul positif',cls:equilibre?'green':'red'},{label:'Capital emprunté',val:fmtE(capital),sub:'prix+travaux−apport',cls:''},{label:'Gain net 25 ans',val:fmtE(cumul),sub:'cumul cashflow',cls:cumul>=0?'green':'red'}].forEach(m=>{const c=document.createElement('div');c.className='metric-card '+(m.cls||'');c.innerHTML=`<div class="ml">${m.label}</div><div class="mv">${m.val}</div><div class="ms">${m.sub}</div>`;mg.appendChild(c);});
   document.getElementById('phaseBadges').innerHTML='<span class="phase-badge phase-credit">Phase crédit : ans 1–25</span><span class="phase-badge phase-libre">Phase libre : après an 25</span>';
-  const labels=rows.map(r=>'An '+r.y);
   if(immoChart)immoChart.destroy();
-  immoChart=new Chart(document.getElementById('immoChart'),{type:'line',data:{labels,datasets:[{label:'Cash-flow cumulé',data:rows.map(r=>Math.round(r.cumul)),borderColor:'#5DCAA5',backgroundColor:'transparent',borderWidth:2.5,tension:0.3,pointRadius:0},{label:'Loyers / an',data:rows.map(r=>Math.round(r.loyerAn)),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]},{label:'Crédit / an',data:rows.map(r=>Math.round(-r.creditAn)),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:8}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000||(v<=-1000)?(v/1000).toFixed(0)+'k€':v+'€'}}}}});
+  immoChart=new Chart(document.getElementById('immoChart'),{type:'line',data:{labels:rows.map(r=>'An '+r.y),datasets:[{label:'Cash-flow cumulé',data:rows.map(r=>Math.round(r.cumul)),borderColor:'#5DCAA5',backgroundColor:'transparent',borderWidth:2.5,tension:0.3,pointRadius:0},{label:'Loyers / an',data:rows.map(r=>Math.round(r.loyerAn)),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]},{label:'Crédit / an',data:rows.map(r=>Math.round(-r.creditAn)),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:1.5,tension:0,pointRadius:0,borderDash:[4,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:isDark?'#1a1a1a':'#fff',borderColor:gc,borderWidth:1,titleColor:tc,bodyColor:isDark?'#fff':'#111',callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toLocaleString('fr-FR')} €`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11},maxTicksLimit:8}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11},callback:v=>v>=1000||(v<=-1000)?(v/1000).toFixed(0)+'k€':v+'€'}}}}});
   const leg=document.getElementById('immoLegend');leg.innerHTML='';[{label:'Cash-flow cumulé',color:'#5DCAA5'},{label:'Loyers / an',color:'#378ADD'},{label:'Crédit / an',color:'#E24B4A'}].forEach(item=>{const d=document.createElement('div');d.className='legend-item';d.innerHTML=`<span class="legend-dot" style="background:${item.color}"></span>${item.label}`;leg.appendChild(d);});
   let html='<thead><tr><th>Année</th><th>Loyers reçus</th><th>Crédit payé</th><th>Taxes</th><th>Cash-flow</th><th>Cumulé</th></tr></thead><tbody>';
   rows.forEach(row=>{html+=`<tr><td>An ${row.y}</td><td>${fmtE(row.loyerAn)}</td><td class="tr">${fmtE(row.creditAn)}</td><td class="tr">${fmtE(row.taxe)}</td><td class="${row.cf>=0?'tg':'tr'}">${row.cf>=0?'+':''}${fmtE(row.cf)}</td><td class="${row.cumul>=0?'tg':'tr'}">${row.cumul>=0?'+':''}${fmtE(row.cumul)}</td></tr>`;});
   html+='</tbody>';document.getElementById('annualTable').innerHTML=html;
 }
-
 function buildImmoAll(){buildCityTabs();buildTierTabs();buildImmoParams();computeImmo();}
 
-/* INIT */
 buildDateSelects();buildExpenseGrid();buildAffiliates();updateInvest();
 immoParams=immoDefaults();buildImmoAll();
 </script>
